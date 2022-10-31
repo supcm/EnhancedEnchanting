@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "POP",
+    "LHL",
+    "I#I"
+  ],
+  "key": {
+    "H": {
+      "item": "enhancedenchanting:enchanted_heart"
+    },
+    "#": {
+      "item": "enhancedenchanting:stabilizer"
+    },
+    "L": {
+      "item": "enhancedenchanting:lava_crystal"
+    },
+    "P": {
+      "item": "enhancedenchanting:plate"
+    },
+    "O": {
+      "item": "enhancedenchanting:overloading_mech"
+    },
+    "I": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "result": {
+    "item": "enhancedenchanting:enchanting_station"
+  }
+}

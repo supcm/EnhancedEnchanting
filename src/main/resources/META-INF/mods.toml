@@ -1,0 +1,31 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="MIT"
+[[mods]]
+modId="enhancedenchanting"
+# The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
+# ${file.jarVersion} will substitute the value of the Implementation-Version as read from the mod's JAR file metadata
+# see the associated build.gradle script for how to populate this completely automatically during a build
+version="1.2.2"
+displayName="Enhanced Enchanting"
+# A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
+#updateJSONURL="https://change.me.example.invalid/updates.json" #optional
+# A URL for the "homepage" for this mod, displayed in the mod UI
+#displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
+# A file name (in the root of the mod JAR) containing a logo for display
+#logoFile="assets/enhancedenchanting/texturees/gui/logo.png"
+credits="Me and my Cat"
+authors="_SupCM_"
+description='''This mod overhauls enchnatning system (as the author's vision).'''
+[[dependencies.enhancedenchanting]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.enhancedenchanting]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,1.17)"
+    ordering="AFTER"
+    side="BOTH"

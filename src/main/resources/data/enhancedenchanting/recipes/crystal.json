@@ -1,0 +1,11 @@
+{
+  "type" : "enhancedenchanting:enchanting",
+  "tier": 1,
+  "level": 5,
+  "ingredient": {
+    "item": "enhancedenchanting:xp_crystal_empty"
+  },
+  "result": {
+    "item": "enhancedenchanting:xp_crystal"
+  }
+}

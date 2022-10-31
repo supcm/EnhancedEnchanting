@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PLP",
+    "S#S",
+    "P#P"
+  ],
+  "key": {
+    "S": {
+      "tag": "enhancedenchanting:symbols"
+    },
+    "#": {
+      "item": "enhancedenchanting:stabilizer"
+    },
+    "L": {
+      "item": "enhancedenchanting:lava_crystal"
+    },
+    "P": {
+      "item": "enhancedenchanting:plate"
+    }
+  },
+  "result": {
+    "item": "enhancedenchanting:enhanced_stabilizer"
+  }
+}

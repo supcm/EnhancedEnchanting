@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "enhancedenchanting:clay_plate"
+  },
+  "result": "enhancedenchanting:plate",
+  "experience": 1.25,
+  "cookingtime": 300
+}

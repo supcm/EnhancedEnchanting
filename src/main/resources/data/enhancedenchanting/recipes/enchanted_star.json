@@ -1,0 +1,11 @@
+{
+  "type" : "enhancedenchanting:enchanting",
+  "tier": 0,
+  "level": 15,
+  "ingredient": {
+    "item": "enhancedenchanting:star"
+  },
+  "result": {
+    "item": "enhancedenchanting:enchanted_star"
+  }
+}

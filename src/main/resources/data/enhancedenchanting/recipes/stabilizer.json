@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BDB",
+    "NSN",
+    "BEB"
+  ],
+  "key": {
+    "S": {
+      "tag": "enhancedenchanting:symbols"
+    },
+    "E": {
+      "item": "minecraft:ender_pearl"
+    },
+    "N": {
+      "item": "enhancedenchanting:lava_crystal"
+    },
+    "B": {
+      "item": "enhancedenchanting:plate"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "enhancedenchanting:stabilizer"
+  }
+}

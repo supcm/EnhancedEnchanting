@@ -1,0 +1,5 @@
+{
+    "variants" : {
+        "" : { "model" : "enhancedenchanting:block/lava_crystal_ore" }
+    }
+}

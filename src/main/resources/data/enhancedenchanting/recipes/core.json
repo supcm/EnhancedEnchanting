@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PLP",
+    "LSL",
+    "PLP"
+  ],
+  "key": {
+    "P": {
+      "item": "enhancedenchanting:plate"
+    },
+    "L": {
+      "item": "enhancedenchanting:lava_crystal"
+    },
+    "S": {
+      "item": "enhancedenchanting:enchanted_star"
+    }
+  },
+  "result": {
+    "item": "enhancedenchanting:core"
+  }
+}

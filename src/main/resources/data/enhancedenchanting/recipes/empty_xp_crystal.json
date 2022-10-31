@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient" : {
+    "item": "minecraft:emerald"
+  },
+  "result": "enhancedenchanting:xp_crystal_empty",
+  "count": 1
+}

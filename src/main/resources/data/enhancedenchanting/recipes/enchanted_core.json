@@ -1,0 +1,11 @@
+{
+  "type" : "enhancedenchanting:enchanting",
+  "tier": 1,
+  "level": 20,
+  "ingredient": {
+    "item": "enhancedenchanting:core"
+  },
+  "result": {
+    "item": "enhancedenchanting:enchanted_core"
+  }
+}

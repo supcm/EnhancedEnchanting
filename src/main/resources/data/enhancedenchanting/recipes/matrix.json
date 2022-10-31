@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PQP",
+    "SCS",
+    "#M#"
+  ],
+  "key": {
+    "S": {
+      "item": "enhancedenchanting:lava_crystal"
+    },
+    "P": {
+      "item": "enhancedenchanting:plate"
+    },
+    "Q": {
+      "item": "enhancedenchanting:stabilizer"
+    },
+    "C": {
+      "item": "enhancedenchanting:enchanted_core"
+    },
+    "M": {
+      "item": "enhancedenchanting:star"
+    },
+    "#": {
+      "tag": "forge:ingots/iron"
+    }
+  },
+  "result": {
+    "item": "enhancedenchanting:matrix"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DED",
+    "SQS",
+    "#T#"
+  ],
+  "key": {
+    "S": {
+      "tag": "enhancedenchanting:symbols"
+    },
+    "#": {
+      "item": "minecraft:obsidian"
+    },
+    "Q": {
+      "item": "enhancedenchanting:stabilizer"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "E": {
+      "item": "enhancedenchanting:enchanted_star"
+    },
+    "T": {
+      "item": "enhancedenchanting:enchanted_table"
+    }
+  },
+  "result": {
+    "item": "enhancedenchanting:word_machine"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type" : "enhancedenchanting:enchanting",
+  "tier": 2,
+  "level": 30,
+  "ingredient": {
+    "item": "minecraft:heart_of_the_sea"
+  },
+  "result": {
+    "item": "enhancedenchanting:enchanted_heart"
+  }
+}
