@@ -4,9 +4,17 @@
   "block.enhancedenchanting.enchanted_table": "Enchanted Table",
   "block.enhancedenchanting.word_machine": "Word Machine",
   "block.enhancedenchanting.word_forge": "Word Forge",
+  "block.enhancedenchanting.thought_loom": "Thought Loom",
+  "block.enhancedenchanting.reassessment_pillar": "Reassessment Pillar",
+  "block.reassessment_pillar.info": "Part of Reassessment Altar",
+  "block.reassessment.info": "Uses Conceptions to rethink something",
+  "block.enhancedenchanting.reassessment_table": "Reassessment Table",
+  "tile.enhancedenchanting.reassessment_table.not_valid": "Structure of Reassessment Altar is not complete!",
+  "block.reassessment_table.info": "Core of Reassessment Altar",
   "block.enhancedenchanting.lava_crystal_ore": "Lava Crystal Ore",
   "block.enhancedenchanting.matrix": "Glyphs Matrix",
   "block.matrix.info": "Copies Glyph to a Glyphs Plate",
+  "block.matrix.info1": "Creates a Conception Base when no glyphs inside",
   "block.enhancedenchanting.enchanting_station": "Enchanting Station",
   "block.enchanting_station.info": "Does not require XP to repair and allows you to enchant over the limit",
 
@@ -21,7 +29,7 @@
   "glyphs_casket.notenoughxp": "Not enough XP Levels to open the casket!",
   "item.enhancedenchanting.xp_crystal_empty" : "Empty XP Crystal",
   "item.enhancedenchanting.xp_crystal" : "XP Crystal",
-  "item.crystal.info": "Stores 5 XP Levels",
+  "item.crystal.info": "Stores 6 XP Levels",
   "item.crystal.use": "Click RMB to break it.",
   "item.enhancedenchanting.codex": "Codex of Enchantments",
   "item.codex.info1": "See the enchantments you've revealed,",
@@ -34,6 +42,14 @@
   "item.enhancedenchanting.stabilizer" : "Enchanting Stabilizer",
   "item.enhancedenchanting.enhanced_stabilizer" : "Enhanced Enchanting Stabilizer",
 
+  "item.enhancedenchanting.conception_base": "Base of Conception",
+  "item.enhancedenchanting.conception_beauty": "Conception of Beauty",
+  "item.enhancedenchanting.conception_creation": "Conception of Creation",
+  "item.enhancedenchanting.conception_art": "Conception of Art",
+  "item.enhancedenchanting.conception_lies": "Conception of Lies",
+  "item.enhancedenchanting.conception_soul": "Conception of Soul",
+  "item.enhancedenchanting.conception_truth": "Conception of Truth",
+
   "item.enhancedenchanting.ara": "Ara",
   "item.enhancedenchanting.oku": "Oku",
   "item.enhancedenchanting.lua": "Lua",
@@ -45,6 +61,12 @@
   "item.enhancedenchanting.zet": "Zet",
   "item.enhancedenchanting.fir": "Fir",
   "item.fir.info": "Use it on Enchanting Station to exceed the limits",
+  "item.enhancedenchanting.iro": "Iro",
+  "item.enhancedenchanting.noy": "Noy",
+  "item.enhancedenchanting.sat": "Sat",
+  "item.enhancedenchanting.bal": "Bal",
+  "item.enhancedenchanting.woy": "Woy",
+  "item.enhancedenchanting.ver": "Ver",
 
   "enchantment.level.10": "X",
   "enchantment.level.11": "XI",
@@ -59,6 +81,8 @@
   "enchantment.enhancedenchanting.xp_boost.desc": "Increase amount of XP, that dropped from killed entities or broken blocks",
   "enchantment.enhancedenchanting.gravity_core": "Gravity Core",
   "enchantment.enhancedenchanting.gravity_core.desc": "Pulls all items in certain radius to you",
+  "enchantment.enhancedenchanting.unstability": "Unstability",
+  "enchantment.enhancedenchanting.unstability.desc": "Increases chance to drop unstable glyphs from killed entities",
 
   "entity.enhancedenchanting.guardian": "Enchanting Guardian",
   "entity.enhancedenchanting.guard.lightning_prepare": "Lightning Attack preparing! Find a roof!",
@@ -71,6 +95,8 @@
   "enchanting.notenoughxp": "Not enough XP levels to perform enchantng!",
 
   "jei.enchanting": "Enchanting",
+  "jei.conception": "Conception Creating",
+  "jei.reassessment": "Items Reassessment",
   "itemGroup.enhancedenchantingtab": "Enhanced Enchanting",
   "itemGroup.symbolstab": "Enhanced Enchanting: Glyphs"
 }

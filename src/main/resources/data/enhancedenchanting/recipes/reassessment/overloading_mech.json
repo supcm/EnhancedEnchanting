@@ -1,0 +1,17 @@
+{
+  "type": "enhancedenchanting:reassessment",
+  "conceptions": [
+    0,
+    3,
+    1,
+    0,
+    1,
+    2
+  ],
+  "input": {
+    "item": "enhancedenchanting:core"
+  },
+  "output": {
+    "item": "enhancedenchanting:overloading_mech"
+  }
+}

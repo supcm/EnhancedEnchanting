@@ -1,0 +1,5 @@
+{
+    "variants" : {
+        "" : { "model" : "enhancedenchanting:block/reassessment_pillar" }
+    }
+}

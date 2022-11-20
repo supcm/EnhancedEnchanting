@@ -7,15 +7,39 @@
         {
           "type": "minecraft:item",
           "name": "enhancedenchanting:fir"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "enhancedenchanting:iro"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "enhancedenchanting:noy"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "enhancedenchanting:sat"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "enhancedenchanting:bal"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "enhancedenchanting:woy"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "enhancedenchanting:ver"
         }
       ],
-      "conditions":[
+      "conditions": [
         {
           "condition": "minecraft:killed_by_player"
         },
         {
           "condition": "minecraft:random_chance_with_looting",
-          "chance": 0.15,
+          "chance": 0.075,
           "looting_multiplier": 0.5
         }
       ]

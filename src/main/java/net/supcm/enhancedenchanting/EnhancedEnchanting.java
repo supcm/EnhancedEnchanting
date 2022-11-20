@@ -15,12 +15,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.supcm.enhancedenchanting.common.data.recipes.UsingConfigCondition;
-import net.supcm.enhancedenchanting.common.init.BlockRegister;
-import net.supcm.enhancedenchanting.common.init.TileRegister;
-import net.supcm.enhancedenchanting.common.init.RecipeRegister;
-import net.supcm.enhancedenchanting.common.init.EnchantmentRegister;
-import net.supcm.enhancedenchanting.common.init.EntityTypeRegister;
-import net.supcm.enhancedenchanting.common.init.ItemRegister;
+import net.supcm.enhancedenchanting.common.init.*;
 import net.supcm.enhancedenchanting.common.network.PacketHandler;
 
 @Mod(value=EnhancedEnchanting.MODID)
@@ -49,6 +44,7 @@ public class EnhancedEnchanting {
         RecipeRegister.reg(bus);
         EntityTypeRegister.reg(bus);
         ItemTags.createOptional(new ResourceLocation(MODID, "symbols"));
+        ItemTags.createOptional(new ResourceLocation(MODID, "dyes"));
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EnhancedEnchantingConfig.SPEC,
                 MODID + "-common.toml");
     }

@@ -1,0 +1,21 @@
+{
+  "type": "enhancedenchanting:conception",
+  "level": 5,
+  "inputs": [
+    {
+      "item": "enhancedenchanting:noy"
+    },
+    {
+      "tag": "enhancedenchanting:dyes"
+    },
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "minecraft:painting"
+    }
+  ],
+  "output": {
+    "item": "enhancedenchanting:conception_art"
+  }
+}

@@ -4,9 +4,17 @@
   "block.enhancedenchanting.enchanted_table": "Зачарованный стол",
   "block.enhancedenchanting.word_machine": "Станок слов",
   "block.enhancedenchanting.word_forge": "Кузня слов",
+  "block.enhancedenchanting.thought_loom": "Ткач Мыслей",
+  "block.enhancedenchanting.reassessment_pillar": "Колонна Переосмысления",
+  "block.reassessment_pillar.info": "Часть Алтаря Переосмысления",
+  "block.reassessment.info": "Использует Концепции для переосмысления чего-либо",
+  "block.enhancedenchanting.reassessment_table": "Стол Переосмысления",
+  "tile.enhancedenchanting.reassessment_table.not_valid": "Структура Алтаря Переосмысления неполна!",
+  "block.reassessment_table.info": "Ядро Алтаря Переосмысления",
   "block.enhancedenchanting.lava_crystal_ore": "Руда Лавового Кристалла",
   "block.enhancedenchanting.matrix": "Матрица Глифов",
   "block.matrix.info": "Копирует Глиф на Плитку Глифа",
+  "block.matrix.info1": "Создаёт Основу Концепции, когда внутри нет глифов",
   "block.enhancedenchanting.enchanting_station": "Станция зачарования",
   "block.enchanting_station.info": "Не требует Опыта для починки и позволяет зачаровывать сверх лимита",
 
@@ -21,7 +29,7 @@
   "glyphs_casket.notenoughxp": "Не достаточно уровней опыта, чтобы открыть шкатулку!",
   "item.enhancedenchanting.xp_crystal_empty" : "Пустой Кристал Опыта",
   "item.enhancedenchanting.xp_crystal" : "Кристал Опыта",
-  "item.crystal.info": "Хранит 5 уровней опыта",
+  "item.crystal.info": "Хранит 6 уровней опыта",
   "item.crystal.use": "Нажмите ПКМ, чтобы разбить его.",
   "item.enhancedenchanting.codex": "Кодекс Зачарований",
   "item.codex.info1": "Просмотрите открытые вами зачарования,",
@@ -34,10 +42,20 @@
   "item.enhancedenchanting.stabilizer" : "Стибилзатор Зачарования",
   "item.enhancedenchanting.enhanced_stabilizer" : "Улучшенный Стабилизатор Зачарования",
 
+  "item.enhancedenchanting.conception_base": "Основа Концепции",
+  "item.enhancedenchanting.conception_beauty": "Концепция Красоты",
+  "item.enhancedenchanting.conception_creation": "Концепция Создания",
+  "item.enhancedenchanting.conception_art": "Концепция Искусства",
+  "item.enhancedenchanting.conception_lies": "Концепция Лжи",
+  "item.enhancedenchanting.conception_soul": "Концепция Души",
+  "item.enhancedenchanting.conception_truth": "Концепция Правды",
+
   "enchantment.enhancedenchanting.xp_boost": "Увеличение Опыта",
   "enchantment.enhancedenchanting.xp_boost.desc": "Увеличение количества Опыта, выпадающего с убитых существ или сломанных блоков",
   "enchantment.enhancedenchanting.gravity_core": "Гравитационное Ядро",
   "enchantment.enhancedenchanting.gravity_core.desc": "Притягивает все предметы в определённом радиусе",
+  "enchantment.enhancedenchanting.unstability": "Нестабильность",
+  "enchantment.enhancedenchanting.unstability.desc": "Увеличивает шанс выпадения нестабильных глифов с существ после убийства",
 
   "item.fir.info": "Используйте его на Станции Зачарования, чтобы превзойти лимиты",
 
@@ -52,6 +70,8 @@
   "enchanting.notenoughxp": "Недостаточно уровней Опыта, чтобы произвести зачарование!",
 
   "jei.enchanting": "Зачарование",
+  "jei.conception": "Создание Концепций",
+  "jei.reassessment": "Переосмысление Предметов",
   "itemGroup.enhancedenchantingtab": "Enhanced Enchanting",
   "itemGroup.symbolstab": "Enchant Changer: Глифы"
 }

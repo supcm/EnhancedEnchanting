@@ -1,0 +1,17 @@
+{
+  "type": "enhancedenchanting:reassessment",
+  "conceptions": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "input": {
+    "item": "enhancedenchanting:star"
+  },
+  "output": {
+    "item": "enhancedenchanting:core"
+  }
+}

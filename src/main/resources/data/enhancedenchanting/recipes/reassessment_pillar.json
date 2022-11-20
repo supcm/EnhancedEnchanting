@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#E#",
+    "ICI",
+    "#D#"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "#": {
+      "item": "minecraft:smooth_stone"
+    },
+    "D": {
+      "item": "minecraft:dark_oak_planks"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "C": {
+      "item": "enhancedenchanting:conception_base"
+    }
+  },
+  "result": {
+    "item": "enhancedenchanting:reassessment_pillar",
+    "count": 2
+  }
+}

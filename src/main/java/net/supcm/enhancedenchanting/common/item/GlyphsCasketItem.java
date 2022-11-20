@@ -1,6 +1,7 @@
 package net.supcm.enhancedenchanting.common.item;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,10 +31,20 @@ public class GlyphsCasketItem extends Item {
         if(!world.isClientSide) {
             if(player.experienceLevel >= 2 || player.isCreative()) {
                 Random r = world.getRandom();
-                player.addItem(new ItemStack(ForgeRegistries.ITEMS.getValue(
-                        new ResourceLocation(EnhancedEnchanting.MODID, EnchantmentsList.SYMBOLS_LIST
-                                .get(r.nextInt(EnchantmentsList.SYMBOLS_LIST.size())))),
-                        r.nextInt(2)+1));
+                if(player.inventory.getFreeSlot() != -1)
+                    player.addItem(new ItemStack(ForgeRegistries.ITEMS.getValue(
+                            new ResourceLocation(EnhancedEnchanting.MODID, EnchantmentsList.SYMBOLS_LIST
+                                    .get(r.nextInt(EnchantmentsList.SYMBOLS_LIST.size())))),
+                            r.nextInt(2) + 1));
+                else
+                    world.addFreshEntity(new ItemEntity(world,
+                            player.blockPosition().getX(),
+                            player.blockPosition().getY(),
+                            player.blockPosition().getZ(),
+                            new ItemStack(ForgeRegistries.ITEMS.getValue(
+                                    new ResourceLocation(EnhancedEnchanting.MODID, EnchantmentsList.SYMBOLS_LIST
+                                            .get(r.nextInt(EnchantmentsList.SYMBOLS_LIST.size())))),
+                            r.nextInt(2) + 1)));
                 if(!player.isCreative())
                     player.getItemInHand(hand).shrink(1);
                 world.playSound(null, player.blockPosition(), SoundEvents.ENDER_CHEST_OPEN, SoundCategory.PLAYERS, 1f, 1f);

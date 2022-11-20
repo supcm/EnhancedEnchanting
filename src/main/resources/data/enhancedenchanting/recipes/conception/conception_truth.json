@@ -1,0 +1,21 @@
+{
+  "type": "enhancedenchanting:conception",
+  "level": 5,
+  "inputs": [
+    {
+      "item": "enhancedenchanting:bal"
+    },
+    {
+      "item": "minecraft:quartz"
+    },
+    {
+      "item": "minecraft:prismarine_shard"
+    },
+    {
+      "item": "minecraft:glass"
+    }
+  ],
+  "output": {
+    "item": "enhancedenchanting:conception_truth"
+  }
+}

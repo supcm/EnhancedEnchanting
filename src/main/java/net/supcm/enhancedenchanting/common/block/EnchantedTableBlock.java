@@ -59,7 +59,7 @@ public class EnchantedTableBlock extends ContainerBlock {
             EnchantedTableTile tile = (EnchantedTableTile)world.getBlockEntity(pos);
             ItemStack handItem = player.getItemInHand(Hand.MAIN_HAND);
                 if(hand == Hand.MAIN_HAND) {
-                    if(handItem.isEmpty() || handItem.getItem() instanceof ItemRegister.ItemSymbol) {
+                    if(handItem.isEmpty() || handItem.getItem() instanceof ItemRegister.GlyphItem) {
                         tile.insertOrExtractItem(player, 0);
                         tile.getEnchLevel();
                         world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1f, 1f);

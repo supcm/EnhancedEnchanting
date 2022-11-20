@@ -1,0 +1,21 @@
+{
+  "type": "enhancedenchanting:conception",
+  "level": 5,
+  "inputs": [
+    {
+      "item": "enhancedenchanting:iro"
+    },
+    {
+      "item": "minecraft:soul_sand"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "enhancedenchanting:xp_crystal_empty"
+    }
+  ],
+  "output": {
+    "item": "enhancedenchanting:conception_soul"
+  }
+}

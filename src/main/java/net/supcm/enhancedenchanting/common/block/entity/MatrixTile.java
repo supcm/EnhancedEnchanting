@@ -30,7 +30,8 @@ public class MatrixTile extends TileEntity implements ITickableTileEntity {
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2 | 4 | 16);}
         @Override public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
             return slot == 0 ? stack.getItem() == ItemRegister.PLATE.get() :
-                    stack.getItem() instanceof ItemRegister.ItemSymbol;
+                    (stack.getItem() instanceof ItemRegister.GlyphItem ||
+                            stack.getItem() instanceof ItemRegister.UnstableGlyphItem);
         }
         @Override public int getSlotLimit(int slot) { return slot == 0 ? 64 : 1; }
         @Nonnull @Override public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
@@ -94,9 +95,12 @@ public class MatrixTile extends TileEntity implements ITickableTileEntity {
                 level.explode(null, getBlockPos().getX() + 0.5D,
                         getBlockPos().getY() + 1.25D,
                         getBlockPos().getZ() + 0.5D, 0.1f, Explosion.Mode.NONE);
+                ItemStack stack = new ItemStack(ItemRegister.CONCEPTION_BASE.get(), 4);
+                if(!handler.getStackInSlot(1).isEmpty())
+                    stack = handler.getStackInSlot(1).copy();
                 level.addFreshEntity(new ItemEntity(level, getBlockPos().getX()+0.5,
                         getBlockPos().getY()+1.35D,
-                        getBlockPos().getZ()+0.5, handler.getStackInSlot(1).copy()));
+                        getBlockPos().getZ()+0.5, stack));
                 tick = 0;
                 setDoCraft(false);
                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2 | 4 | 16);

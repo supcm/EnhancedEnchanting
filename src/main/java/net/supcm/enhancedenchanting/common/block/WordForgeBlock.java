@@ -81,7 +81,7 @@ public class WordForgeBlock extends ContainerBlock {
                 double hitLoc = hit.getLocation().y;
                 boolean up = hitLoc-(int)hitLoc >= 0.9D || (int)hitLoc > pos.getY();
                 boolean low = hitLoc-(int)hitLoc <= 0.45D && (int)hitLoc < pos.getY()+1;
-                if(handItem.isEmpty() || handItem.getItem() instanceof ItemRegister.ItemSymbol) {
+                if(handItem.isEmpty() || handItem.getItem() instanceof ItemRegister.GlyphItem) {
                     if(up) tile.insertOrExtractItem(player, 0);
                     else if(low) tile.insertOrExtractItem(player, 2);
                     else tile.insertOrExtractItem(player, 1);

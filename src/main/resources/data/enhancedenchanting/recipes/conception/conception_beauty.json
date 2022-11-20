@@ -1,0 +1,21 @@
+{
+  "type": "enhancedenchanting:conception",
+  "level": 5,
+  "inputs": [
+    {
+      "item": "enhancedenchanting:sat"
+    },
+    {
+      "item": "minecraft:wheat_seeds"
+    },
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "tag": "minecraft:flowers"
+    }
+  ],
+  "output": {
+    "item": "enhancedenchanting:conception_beauty"
+  }
+}

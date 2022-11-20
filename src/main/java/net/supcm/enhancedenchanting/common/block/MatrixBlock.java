@@ -65,18 +65,19 @@ public class MatrixBlock extends ContainerBlock{
                     if (up && (handItem.isEmpty() || handItem.getItem() == ItemRegister.PLATE.get())) {
                         tile.insertOrExtractItem(player, 0);
                         world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1f, 1f);
-                    } else if (handItem.isEmpty() || handItem.getItem() instanceof ItemRegister.ItemSymbol) {
+                    } else if (handItem.isEmpty() || (handItem.getItem() instanceof ItemRegister.GlyphItem
+                        || handItem.getItem() instanceof ItemRegister.UnstableGlyphItem)) {
                         tile.insertOrExtractItem(player, 1);
                         world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1f, 1f);
                     } else if (handItem.getItem() == ItemRegister.LAVA_CRYSTAL.get()) {
-                        if (!tile.handler.getStackInSlot(0).isEmpty() &&
-                                !tile.handler.getStackInSlot(1).isEmpty()) {
+                        if (!tile.handler.getStackInSlot(0).isEmpty()) {
                             if (!player.isCreative()) {
                                 if (player.experienceLevel < 5) return ActionResultType.PASS;
                                 handItem.shrink(1);
                                 player.onEnchantmentPerformed(handItem, 5);
                             }
-                            world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1f, 1f);
+                            world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL,
+                                    SoundCategory.BLOCKS, 1f, 1f);
                             tile.setDoCraft(true);
                         }
                     }

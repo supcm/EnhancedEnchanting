@@ -38,7 +38,7 @@ public class EnchantedTableTile extends TileEntity {
         @Override protected void onContentsChanged(int slot) { setChanged();
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2 | 4 | 16);}
         @Override public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-            return stack.getItem() instanceof ItemRegister.ItemSymbol;
+            return stack.getItem() instanceof ItemRegister.GlyphItem;
         }
         @Override public int getSlotLimit(int slot) { return 2; }
         @Nonnull @Override public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {

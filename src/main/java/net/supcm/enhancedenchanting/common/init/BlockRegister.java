@@ -31,6 +31,32 @@ public class BlockRegister {
             WordForgeBlock::new);
     public static final RegistryObject<Block> LAVA_CRYSTAL_ORE_BLOCK = createBlock("lava_crystal_ore",
             LavaCrystalOreBlock::new);
+    public static final RegistryObject<Block> THOUGHT_LOOM = createBlock("thought_loom",
+            ThoughtLoomBlock::new);
+    public static final RegistryObject<Block> REASSESSMENT_TABLE = BLOCKS.register("reassessment_table",
+            ReassessmentTableBlock::new);
+    public static final RegistryObject<Item> REASSESSMENT_TABLE_ITEM = ItemRegister.ITEMS.register("reassessment_table",
+            () -> new BlockItem(REASSESSMENT_TABLE.get(), new Item.Properties()
+                    .tab(EnhancedEnchanting.EETAB)
+                    .rarity(Rarity.UNCOMMON)) {
+                @Override public void appendHoverText(ItemStack stack, @Nullable World world,
+                                                      List<ITextComponent> text, ITooltipFlag flag) {
+                    text.add(1, new TranslationTextComponent("block.reassessment_table.info"));
+                    text.add(2, new TranslationTextComponent("block.reassessment.info"));
+                }
+            });
+    public static final RegistryObject<Block> REASSESSMENT_PILLAR = BLOCKS.register("reassessment_pillar",
+            ReassessmentPillarBlock::new);
+    public static final RegistryObject<Item> REASSESSMENT_PILLAR_ITEM = ItemRegister.ITEMS.register("reassessment_pillar",
+            () -> new BlockItem(REASSESSMENT_PILLAR.get(), new Item.Properties()
+                    .tab(EnhancedEnchanting.EETAB)
+                    .rarity(Rarity.UNCOMMON)) {
+                @Override public void appendHoverText(ItemStack stack, @Nullable World world,
+                                                      List<ITextComponent> text, ITooltipFlag flag) {
+                    text.add(1, new TranslationTextComponent("block.reassessment_pillar.info"));
+                    text.add(2, new TranslationTextComponent("block.reassessment.info"));
+                }
+            });
     public static final RegistryObject<Block> MATRIX = BLOCKS.register("matrix", MatrixBlock::new);
     public static final RegistryObject<Item> MATRIX_ITEM = ItemRegister.ITEMS.register("matrix",
             () -> new BlockItem(MATRIX.get(), new Item.Properties()
@@ -39,6 +65,7 @@ public class BlockRegister {
                 @Override public void appendHoverText(ItemStack stack, @Nullable World world,
                                                       List<ITextComponent> text, ITooltipFlag flag) {
                     text.add(1, new TranslationTextComponent("block.matrix.info"));
+                    text.add(2, new TranslationTextComponent("block.matrix.info1"));
                 }
             });
     public static final RegistryObject<Block> ENCHANTING_STATION = BLOCKS.register("enchanting_station",

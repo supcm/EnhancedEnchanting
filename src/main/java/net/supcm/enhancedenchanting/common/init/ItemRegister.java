@@ -23,6 +23,7 @@ public class ItemRegister {
             EnhancedEnchanting.MODID);
 
     public static Rarity FORBIDDEN = Rarity.create("Forbidden", TextFormatting.DARK_RED);
+    public static Rarity CONCEPTION = Rarity.create("Conception", TextFormatting.GOLD);
 
     public static final RegistryObject<Item> STAR = ITEMS.register("star", () ->
             new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB).rarity(Rarity.RARE)));
@@ -56,11 +57,18 @@ public class ItemRegister {
             new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB)));
     public static final RegistryObject<Item> PLATE = ITEMS.register("plate", () ->
             new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB)));
-
-    public static final RegistryObject<Item> CASKET = ITEMS.register("glyphs_casket", GlyphsCasketItem::new);
     public static final RegistryObject<Item> CRYSTAL = ITEMS.register("xp_crystal", XpCrystalItem::new);
+    public static final RegistryObject<Item> CASKET = ITEMS.register("glyphs_casket", GlyphsCasketItem::new);
     public static final RegistryObject<Item> CODEX = ITEMS.register("codex", CodexItem::new);
     public static final RegistryObject<Item> ARCHIVE = ITEMS.register("archive", ArchiveItem::new);
+    public static final RegistryObject<Item> CONCEPTION_BASE = ITEMS.register("conception_base", () ->
+            new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB)));
+    public static final RegistryObject<Item> CONCEPTION_SOUL = createConception("soul", new float[]{0.4f, 0.4f, 1f});
+    public static final RegistryObject<Item> CONCEPTION_BEAUTY = createConception("beauty", new float[]{1f, 0.5f, 0.5f});
+    public static final RegistryObject<Item> CONCEPTION_ART = createConception("art", new float[]{0.6f, 0.6f, 0.6f});
+    public static final RegistryObject<Item> CONCEPTION_CREATION = createConception("creation", new float[]{0.6f, 1f, 0.6f});
+    public static final RegistryObject<Item> CONCEPTION_TRUTH = createConception("truth", new float[]{0.9f, 0.9f, 0.9f});
+    public static final RegistryObject<Item> CONCEPTION_LIES = createConception("lies", new float[]{1f, 0.3f, 0.3f});
     public static final RegistryObject<Item> OKU = createSymbol("oku");
     public static final RegistryObject<Item> GEO = createSymbol("geo");
     public static final RegistryObject<Item> ARA = createSymbol("ara");
@@ -70,6 +78,12 @@ public class ItemRegister {
     public static final RegistryObject<Item> LUA = createSymbol("lua");
     public static final RegistryObject<Item> DOR = createSymbol("dor");
     public static final RegistryObject<Item> ZET = createSymbol("zet");
+    public static final RegistryObject<Item> IRO = createUnstableSymbol("iro");
+    public static final RegistryObject<Item> NOY = createUnstableSymbol("noy");
+    public static final RegistryObject<Item> SAT = createUnstableSymbol("sat");
+    public static final RegistryObject<Item> BAL = createUnstableSymbol("bal");
+    public static final RegistryObject<Item> WOY = createUnstableSymbol("woy");
+    public static final RegistryObject<Item> VER = createUnstableSymbol("ver");
     public static final RegistryObject<Item> FIR = ITEMS.register("fir", () ->
             new Item(new Item.Properties().rarity(FORBIDDEN).fireResistant().tab(EnhancedEnchanting.SYMBOLSTAB)
                     .stacksTo(1)){
@@ -82,16 +96,33 @@ public class ItemRegister {
             });
 
     private static RegistryObject<Item> createSymbol(String name) {
-            return ITEMS.register(name, ItemSymbol::new);
+            return ITEMS.register(name, GlyphItem::new);
     }
+    private static RegistryObject<Item> createUnstableSymbol(String name) { return ITEMS.register(name, UnstableGlyphItem::new); }
+    private static RegistryObject<Item> createConception(String name, float[] color) { return ITEMS.register("conception_"+name, () -> new ConceptionItem(color)); }
+
     public static void reg(IEventBus bus) { ITEMS.register(bus); }
-    public static class ItemSymbol extends Item {
-        public ItemSymbol() { super(new Properties().tab(EnhancedEnchanting.SYMBOLSTAB).stacksTo(16)); }
+    public static class UnstableGlyphItem extends Item {
+        public UnstableGlyphItem() {
+            super(new Properties().tab(EnhancedEnchanting.SYMBOLSTAB).stacksTo(8).rarity(Rarity.RARE));
+        }
+        @Override public boolean hasContainerItem(ItemStack stack) { return true; }
+        @Override public ItemStack getContainerItem(ItemStack itemStack) { return itemStack.copy(); }
+    }
+    public static class ConceptionItem extends Item {
+        float[] color;
+        public ConceptionItem(float[] color) {
+            super(new Properties().tab(EnhancedEnchanting.EETAB).rarity(CONCEPTION).stacksTo(16));
+            setColor(color);
+        }
+        @Override public boolean isFoil(ItemStack stack) { return true; }
+        public float[] getColor() { return color; }
+        void setColor(float[] color) { this.color = color;}
+    }
+    public static class GlyphItem extends Item {
+        public GlyphItem() { super(new Properties().tab(EnhancedEnchanting.SYMBOLSTAB).stacksTo(16)); }
         @Override public boolean isFoil(ItemStack stack) { return true; }
         @Override public boolean hasContainerItem(ItemStack stack) { return true; }
-        @Override public ItemStack getContainerItem(ItemStack itemStack) {
-            ItemStack container = itemStack.copy();
-            return container;
-        }
+        @Override public ItemStack getContainerItem(ItemStack itemStack) { return itemStack.copy(); }
     }
 }

@@ -9,7 +9,7 @@ import net.supcm.enhancedenchanting.common.network.packets.*;
 import java.util.Optional;
 
 public class PacketHandler {
-    public static final String PROTOCOL_VERSION = "4.0";
+    public static final String PROTOCOL_VERSION = "5.0";
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(EnhancedEnchanting.MODID, "network"), () -> PROTOCOL_VERSION,
             PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
@@ -23,5 +23,7 @@ public class PacketHandler {
                 MatrixDoCraftPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
         CHANNEL.registerMessage(index++, CodexScreenPacket.class, CodexScreenPacket::save, CodexScreenPacket::load,
                 CodexScreenPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+        CHANNEL.registerMessage(index++, ReassessmentPacket.class, ReassessmentPacket::save, ReassessmentPacket::load,
+                ReassessmentPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
     }
 }

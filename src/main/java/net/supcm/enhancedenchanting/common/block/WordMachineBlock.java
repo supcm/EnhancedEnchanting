@@ -74,7 +74,7 @@ public class WordMachineBlock extends ContainerBlock {
                 ItemStack handItem = player.getItemInHand(hand);
                 double hitLoc = hit.getLocation().y;
                 boolean up = hitLoc-(int)hitLoc >= 0.75d || (int)hitLoc > pos.getY();
-                if(handItem.isEmpty() || handItem.getItem() instanceof ItemRegister.ItemSymbol){
+                if(handItem.isEmpty() || handItem.getItem() instanceof ItemRegister.GlyphItem){
                     if(up) tile.insertOrExtractItem(player, 0);
                     else tile.insertOrExtractItem(player, 1);
                     world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1f, 1f);

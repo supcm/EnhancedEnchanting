@@ -4,8 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.EnchantmentScreen;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.TableLootEntry;
 import net.minecraft.util.EntityDamageSource;
@@ -31,10 +33,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.supcm.enhancedenchanting.client.block.entity.renderer.*;
-import net.supcm.enhancedenchanting.common.init.TileRegister;
-import net.supcm.enhancedenchanting.common.init.EnchantmentRegister;
+import net.supcm.enhancedenchanting.common.init.*;
 import net.supcm.enhancedenchanting.common.enchantments.EnchantmentsList;
-import net.supcm.enhancedenchanting.common.init.EntityTypeRegister;
 import net.supcm.enhancedenchanting.common.entity.GuardianEntity;
 import net.supcm.enhancedenchanting.client.entity.renderer.GuardianRenderer;
 import net.supcm.enhancedenchanting.common.network.PacketHandler;
@@ -46,13 +46,18 @@ import java.util.*;
 public class EventHandler {
     @SubscribeEvent public static void onLootTableLoad(LootTableLoadEvent e) {
         if(e.getTable().getLootTableId().getPath().startsWith("chest") &&
-                !e.getTable().getLootTableId().getPath().contains("village")) {
+                !e.getTable().getLootTableId().getPath().contains("village"))
             e.getTable().addPool(LootPool.lootPool()
                     .name("casket_pool")
                     .add(TableLootEntry.lootTableReference(new ResourceLocation(EnhancedEnchanting.MODID,
                             "casket_pool")))
                     .build());
-        }
+        else if(e.getTable().getLootTableId().getPath().startsWith("entities"))
+            e.getTable().addPool(LootPool.lootPool()
+                    .name("unstable_glyphs")
+                    .add(TableLootEntry.lootTableReference(new ResourceLocation(EnhancedEnchanting.MODID,
+                            "unstable_glyphs")))
+                    .build());
     }
     @SubscribeEvent public static void onWorldLoaded(WorldEvent.Load e) {
         if(e.getWorld() instanceof ServerWorld) {
@@ -162,11 +167,37 @@ public class EventHandler {
                 if(player != null && player.getMainHandItem().isEnchanted()) {
                     Map<Enchantment, Integer> data =
                             EnchantmentHelper.getEnchantments(player.getMainHandItem());
+                    if(data.containsKey(EnchantmentRegister.UNSTABILITY.get()) &&
+                    e.getEntity().level.getRandom().nextInt(3) == 0) {
+                        e.getDrops().clear();
+                        e.getDrops().add(createDropsList(e.getEntity())
+                                .get(e.getEntity().level.getRandom().nextInt(6)));
+                    }
                     if(data.containsKey(EnchantmentRegister.XP_BOOST.get()))
                         e.setCanceled(true);
                 }
             }
         }
+    }
+    private static List<ItemEntity> createDropsList(Entity entity) {
+        List<ItemEntity> entities = new ArrayList<>();
+        ItemStack[] stack = new ItemStack[] {
+                new ItemStack(ItemRegister.IRO.get()),
+                new ItemStack(ItemRegister.NOY.get()),
+                new ItemStack(ItemRegister.SAT.get()),
+                new ItemStack(ItemRegister.BAL.get()),
+                new ItemStack(ItemRegister.WOY.get()),
+                new ItemStack(ItemRegister.VER.get())
+        };
+        for(int i = 0; i < 6; i++) {
+            ItemEntity item = new ItemEntity(entity.level,
+                    entity.blockPosition().getX(),
+                    entity.blockPosition().getY(),
+                    entity.blockPosition().getZ(),
+                    stack[i]);
+            entities.add(item);
+        }
+        return entities;
     }
     @SubscribeEvent public static void onRightClicked(PlayerInteractEvent.RightClickItem e) {
         if(!e.getWorld().isClientSide){
@@ -223,6 +254,12 @@ public class EventHandler {
                         MatrixTileRenderer::new);
                 ClientRegistry.bindTileEntityRenderer(TileRegister.ENCHANTING_STATION_TILE_TYPE.get(),
                         EnchantingStationTileRenderer::new);
+                ClientRegistry.bindTileEntityRenderer(TileRegister.THOUGHT_WEAVER_TILE_TYPE.get(),
+                        ThoughtLoomTileRenderer::new);
+                ClientRegistry.bindTileEntityRenderer(TileRegister.REASSESSMENT_TABLE_TILE_TYPE.get(),
+                        ReassessmentTableTileRenderer::new);
+                ClientRegistry.bindTileEntityRenderer(TileRegister.REASSESSMENT_PILLAR_TILE_TYPE.get(),
+                        ReassessmentPillarTileRenderer::new);
             });
             RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegister.GUARDIAN.get(),
                     GuardianRenderer::new);

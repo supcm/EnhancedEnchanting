@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "SCS",
+    "PLP"
+  ],
+  "key": {
+    "S": {
+      "item": "enhancedenchanting:stabilizer"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "P": {
+      "item": "enhancedenchanting:plate"
+    },
+    "L": {
+      "item": "minecraft:loom"
+    },
+    "C": {
+      "item": "enhancedenchanting:enchanted_star"
+    }
+  },
+  "result": {
+    "item": "enhancedenchanting:thought_loom"
+  }
+}

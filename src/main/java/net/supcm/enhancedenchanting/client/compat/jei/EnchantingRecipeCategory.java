@@ -18,7 +18,7 @@ import net.supcm.enhancedenchanting.common.data.recipes.EnchantingRecipe;
 public class EnchantingRecipeCategory implements IRecipeCategory<EnchantingRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(EnhancedEnchanting.MODID, "enchanting");
     public static final ResourceLocation TEXTURE
-            = new ResourceLocation(EnhancedEnchanting.MODID, "textures/gui/jei_gui.png");
+            = new ResourceLocation(EnhancedEnchanting.MODID, "textures/gui/enchanting_jei.png");
     private final IDrawable BACKGROUND;
     private final IDrawable ICON;
 

@@ -1,0 +1,21 @@
+{
+  "type": "enhancedenchanting:conception",
+  "level": 5,
+  "inputs": [
+    {
+      "item": "enhancedenchanting:woy"
+    },
+    {
+      "item": "minecraft:slime_ball"
+    },
+    {
+      "item": "minecraft:spider_eye"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "output": {
+    "item": "enhancedenchanting:conception_lies"
+  }
+}
