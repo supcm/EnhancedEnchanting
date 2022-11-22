@@ -31,7 +31,7 @@ import java.util.Map;
 public class ReassessmentTableTile extends TileEntity implements ITickableTileEntity {
     private ReassessmentRecipe recipe = null;
     public boolean isValid;
-    public int[] conceptions;
+    public int[] conceptions = new int[] {0, 0, 0, 0, 0, 0};
     public Map<BlockPos, ItemStack> pillars = Maps.newHashMap();
     public final ItemStackHandler handler = new ItemStackHandler(1) {
         @Override protected void onContentsChanged(int slot) {

@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 
 public class ReassessmentPillarTile extends TileEntity {
     public ReassessmentTableTile tile = null;
-    public int[] conceptions;
+    public int[] conceptions = new int[] {0, 0, 0, 0, 0, 0};
     public final ItemStackHandler handler = new ItemStackHandler(1) {
         @Override protected void onContentsChanged(int slot) {
             if(tile != null) {

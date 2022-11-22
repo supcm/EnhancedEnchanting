@@ -9,7 +9,7 @@ import net.supcm.enhancedenchanting.common.network.packets.*;
 import java.util.Optional;
 
 public class PacketHandler {
-    public static final String PROTOCOL_VERSION = "5.0";
+    public static final String PROTOCOL_VERSION = "5.1";
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(EnhancedEnchanting.MODID, "network"), () -> PROTOCOL_VERSION,
             PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
