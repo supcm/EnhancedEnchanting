@@ -15,6 +15,7 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -122,7 +123,9 @@ public class ThoughtLoomTile extends TileEntity {
                         level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2 | 4 | 16);
                         return ActionResultType.SUCCESS;
                     }
-                }
+                } else
+                    player.sendMessage(new TranslationTextComponent("enchanting.notenoughxp", 0),
+                            player.getUUID());
             }
         }
         return ActionResultType.PASS;

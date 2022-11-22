@@ -63,9 +63,9 @@ public class ItemRegister {
     public static final RegistryObject<Item> ARCHIVE = ITEMS.register("archive", ArchiveItem::new);
     public static final RegistryObject<Item> CONCEPTION_BASE = ITEMS.register("conception_base", () ->
             new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB)));
-    public static final RegistryObject<Item> CONCEPTION_SOUL = createConception("soul", new float[]{0.4f, 0.4f, 1f});
-    public static final RegistryObject<Item> CONCEPTION_BEAUTY = createConception("beauty", new float[]{1f, 0.5f, 0.5f});
-    public static final RegistryObject<Item> CONCEPTION_ART = createConception("art", new float[]{0.6f, 0.6f, 0.6f});
+    public static final RegistryObject<Item> CONCEPTION_SOUL = createConception("soul", new float[]{0.4f, 0.6f, 1f});
+    public static final RegistryObject<Item> CONCEPTION_BEAUTY = createConception("beauty", new float[]{1f, 0.5f, 1f});
+    public static final RegistryObject<Item> CONCEPTION_ART = createConception("art", new float[]{1f, 1f, 0.5f});
     public static final RegistryObject<Item> CONCEPTION_CREATION = createConception("creation", new float[]{0.6f, 1f, 0.6f});
     public static final RegistryObject<Item> CONCEPTION_TRUTH = createConception("truth", new float[]{0.9f, 0.9f, 0.9f});
     public static final RegistryObject<Item> CONCEPTION_LIES = createConception("lies", new float[]{1f, 0.3f, 0.3f});

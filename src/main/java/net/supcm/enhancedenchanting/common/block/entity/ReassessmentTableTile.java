@@ -13,9 +13,6 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -26,19 +23,16 @@ import net.supcm.enhancedenchanting.common.init.BlockRegister;
 import net.supcm.enhancedenchanting.common.init.ItemRegister;
 import net.supcm.enhancedenchanting.common.init.RecipeRegister;
 import net.supcm.enhancedenchanting.common.init.TileRegister;
-import net.supcm.enhancedenchanting.common.network.PacketHandler;
-import net.supcm.enhancedenchanting.common.network.packets.ReassessmentPacket;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class ReassessmentTableTile extends TileEntity implements ITickableTileEntity {
     private ReassessmentRecipe recipe = null;
     public boolean isValid;
-    public static boolean renderCircle;
-    public static Map<BlockPos, ItemStack> pillars = Maps.newHashMap();
+    public int[] conceptions;
+    public Map<BlockPos, ItemStack> pillars = Maps.newHashMap();
     public final ItemStackHandler handler = new ItemStackHandler(1) {
         @Override protected void onContentsChanged(int slot) {
             updateRecipe();
@@ -64,15 +58,13 @@ public class ReassessmentTableTile extends TileEntity implements ITickableTileEn
         super.load(state, tag);
         handler.deserializeNBT(tag.getCompound("Inventory"));
         isValid = tag.getBoolean("IsValid");
+        conceptions = tag.getIntArray("Conceptions");
     }
     @Override public CompoundNBT save(CompoundNBT tag) {
         tag.put("Inventory", handler.serializeNBT());
         tag.putBoolean("IsValid", isValid);
+        tag.putIntArray("Conceptions", conceptions);
         return super.save(tag);
-    }
-    @Override public void onLoad() {
-        super.onLoad();
-        updateRecipe();
     }
     @Override public SUpdateTileEntityPacket getUpdatePacket() {
         return new SUpdateTileEntityPacket(getBlockPos(), -90, getUpdateTag());
@@ -104,14 +96,12 @@ public class ReassessmentTableTile extends TileEntity implements ITickableTileEn
     }
     int i = 0;
     @Override public void tick() {
-        if(!level.isClientSide) {
-            validate(worldPosition, i == 0);
-            /*if(isValid && recipe == null && !handler.getStackInSlot(0).isEmpty())
-                updateRecipe();*/
-            i++;
-        }
+        validate(worldPosition, i == 0);
+        i++;
+        if(!level.isClientSide && isValid)
+            if(recipe == null && !handler.getStackInSlot(0).isEmpty())
+                updateRecipe();
     }
-
     public void createResult() {
         if(recipe != null) {
             for(ItemStack stack : pillars.values()) {
@@ -137,7 +127,7 @@ public class ReassessmentTableTile extends TileEntity implements ITickableTileEn
         }
         updateRecipe();
     }
-    private static int[] createConceptions() {
+    private int[] createConceptions() {
         int[] conceptions = new int[6];
         for(ItemStack stack : pillars.values()) {
             if(stack.getItem() == ItemRegister.CONCEPTION_BEAUTY.get()){
@@ -157,7 +147,7 @@ public class ReassessmentTableTile extends TileEntity implements ITickableTileEn
     }
     public void updateRecipe() {
         if(isValid){
-            boolean setLeastOneChange = false;
+            boolean setLeastOne = false;
             int[] conceptions = createConceptions();
             List<ReassessmentRecipe> recipes = level.getRecipeManager()
                     .getAllRecipesFor(RecipeRegister.REASSESSMENT_RECIPE_TYPE);
@@ -172,15 +162,20 @@ public class ReassessmentTableTile extends TileEntity implements ITickableTileEn
                     }
                     if (isVal) {
                         this.recipe = recipe;
-                        setLeastOneChange = true;
+                        this.conceptions = recipe.getConceptions();
+                        setLeastOne = true;
                     }
                 }
             }
-            if(!setLeastOneChange)
-                this.recipe = null;
-            PacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(),
-                    new ReassessmentPacket(recipe != null ?
-                            recipe.getConceptions() : new int[]{0, 0, 0, 0, 0, 0}));
+            if(!setLeastOne) {
+                recipe = null;
+                this.conceptions = new int[] {0, 0, 0, 0, 0, 0};
+            }
+            for(BlockPos pos : pillars.keySet())
+                if(level.getBlockEntity(pos) instanceof ReassessmentPillarTile) {
+                    ReassessmentPillarTile tile = ((ReassessmentPillarTile) level.getBlockEntity(pos));
+                    tile.setChanged();
+                }
         }
     }
     public void invalidatePillars() {
@@ -191,8 +186,10 @@ public class ReassessmentTableTile extends TileEntity implements ITickableTileEn
             }
         }
         pillars.clear();
+        updateRecipe();
     }
     private void changeValid(boolean valid, BlockPos[] pillarsPoses) {
+        isValid = valid;
         if(valid){
             for (BlockPos pos : pillarsPoses) {
                 ReassessmentPillarTile tile = (ReassessmentPillarTile)level.getBlockEntity(pos);
@@ -202,9 +199,7 @@ public class ReassessmentTableTile extends TileEntity implements ITickableTileEn
             }
         } else {
             invalidatePillars();
-            recipe = null;
         }
-        isValid = valid;
     }
     public void validate(BlockPos pos, boolean isFirstStart) {
         boolean valid = true;
@@ -228,7 +223,7 @@ public class ReassessmentTableTile extends TileEntity implements ITickableTileEn
                     }
                 } else {
                     if ((level.getBlockState(pos.north(i).west(j)).getBlock() != Blocks.AIR) &&
-                            (i != 0 && j != 0))
+                            !(i == 0 && j == 0))
                         valid = false;
                 }
             }

@@ -16,7 +16,7 @@ public class LavaCrystalOreBlock extends OreBlock {
     public LavaCrystalOreBlock() {
         super(Properties.of(Material.STONE).strength(2.0f, 2.0f)
                 .requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).harvestLevel(1)
-                        .lightLevel(light -> 9).noOcclusion());
+                        .lightLevel(light -> 9));
     }
     @Override public void animateTick(BlockState state, World world, BlockPos pos, Random random) {
         if(random.nextInt(4) == 0){

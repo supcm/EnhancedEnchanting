@@ -9,21 +9,17 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.supcm.enhancedenchanting.common.init.ItemRegister;
 import net.supcm.enhancedenchanting.common.init.TileRegister;
-
 import javax.annotation.Nonnull;
-import java.util.Arrays;
 
 public class ReassessmentPillarTile extends TileEntity {
-    ReassessmentTableTile tile = null;
-    static boolean renderCircle;
+    public ReassessmentTableTile tile = null;
+    public int[] conceptions;
     public final ItemStackHandler handler = new ItemStackHandler(1) {
         @Override protected void onContentsChanged(int slot) {
             if(tile != null) {
@@ -44,6 +40,11 @@ public class ReassessmentPillarTile extends TileEntity {
         return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ?
                 inventory.cast() : super.getCapability(cap);
     }
+    @Override public void setChanged() {
+        conceptions = tile != null ? tile.conceptions : new int[]{0, 0, 0, 0, 0, 0};
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2 | 4 | 16);
+        super.setChanged();
+    }
     public ReassessmentPillarTile() {
         super(TileRegister.REASSESSMENT_PILLAR_TILE_TYPE.get());
     }
@@ -54,9 +55,11 @@ public class ReassessmentPillarTile extends TileEntity {
     @Override public void load(BlockState state, CompoundNBT tag) {
         super.load(state, tag);
         handler.deserializeNBT(tag.getCompound("Inventory"));
+        conceptions = tag.getIntArray("Conceptions");
     }
     @Override public CompoundNBT save(CompoundNBT tag) {
         tag.put("Inventory", handler.serializeNBT());
+        tag.putIntArray("Conceptions", conceptions);
         return super.save(tag);
     }
     @Override public SUpdateTileEntityPacket getUpdatePacket() {
@@ -86,11 +89,8 @@ public class ReassessmentPillarTile extends TileEntity {
                     player.getItemInHand(Hand.MAIN_HAND), false));
         }
     }
-    @Override public void setChanged() {
-        super.setChanged();
-    }
-
     void setLinkedTable(ReassessmentTableTile tile){
         this.tile = tile;
+        setChanged();
     }
 }

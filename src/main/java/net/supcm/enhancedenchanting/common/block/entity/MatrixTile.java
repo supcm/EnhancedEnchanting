@@ -13,13 +13,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.supcm.enhancedenchanting.common.init.TileRegister;
 import net.supcm.enhancedenchanting.common.init.ItemRegister;
-import net.supcm.enhancedenchanting.common.network.packets.MatrixDoCraftPacket;
-import net.supcm.enhancedenchanting.common.network.PacketHandler;
 
 import javax.annotation.Nonnull;
 
@@ -39,7 +36,9 @@ public class MatrixTile extends TileEntity implements ITickableTileEntity {
         }};
     public final LazyOptional<ItemStackHandler> inventory = LazyOptional.of(() -> handler);
     public int tick;
-    public boolean doCraft = false;
+    public boolean doCraft;
+    public int renderTick;
+    public boolean doRenderCrystal;
     @Nonnull @Override public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
         return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ?
                 inventory.cast() : super.getCapability(cap);
@@ -52,13 +51,14 @@ public class MatrixTile extends TileEntity implements ITickableTileEntity {
         super.load(state, tag);
         handler.deserializeNBT(tag.getCompound("Inventory"));
         tick = tag.getInt("Tick");
+        doCraft = tag.getBoolean("DoCraft");
     }
     @Override public CompoundNBT save(CompoundNBT tag) {
         tag.put("Inventory", handler.serializeNBT());
         tag.putInt("Tick", tick);
+        tag.putBoolean("DoCraft", doCraft);
         return super.save(tag);
     }
-
     @Override public SUpdateTileEntityPacket getUpdatePacket() {
         return new SUpdateTileEntityPacket(getBlockPos(), -90, getUpdateTag());
     }
@@ -67,7 +67,6 @@ public class MatrixTile extends TileEntity implements ITickableTileEntity {
     }
     @Override public CompoundNBT getUpdateTag() { return save(new CompoundNBT()); }
     @Override public void handleUpdateTag(BlockState state, CompoundNBT tag) { load(state, tag); }
-
     public void insertOrExtractItem(PlayerEntity player, int slot) {
         if(player.getItemInHand(Hand.MAIN_HAND).getItem() == handler.getStackInSlot(slot).getItem()
                 && !(handler.getStackInSlot(slot).isEmpty() || player.getItemInHand(Hand.MAIN_HAND).isEmpty())) {
@@ -83,13 +82,14 @@ public class MatrixTile extends TileEntity implements ITickableTileEntity {
     }
     public void setDoCraft(boolean craft) {
         doCraft = craft;
-        PacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), new MatrixDoCraftPacket(doCraft, tick));
         setChanged();
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2 | 4 | 16);
     }
     @Override public void tick() {
+        doRenderCrystal = doCraft;
+        renderTick = tick;
         if(doCraft) {
             tick++;
-            PacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), new MatrixDoCraftPacket(doCraft, tick));
             if(tick >= 60) {
                 handler.getStackInSlot(0).shrink(1);
                 level.explode(null, getBlockPos().getX() + 0.5D,

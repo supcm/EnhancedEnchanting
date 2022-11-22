@@ -25,6 +25,7 @@ import net.minecraftforge.common.ToolType;
 import net.supcm.enhancedenchanting.common.block.entity.ReassessmentTableTile;
 import net.supcm.enhancedenchanting.common.init.ItemRegister;
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -39,8 +40,8 @@ public class ReassessmentTableBlock extends ContainerBlock {
             Block.box(0, 14, 15, 1, 18, 16)
     ).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
     public ReassessmentTableBlock() {
-        super(Properties.of(Material.WOOD).strength(2.0f, 2.0f).requiresCorrectToolForDrops()
-                .harvestTool(ToolType.AXE));
+        super(Properties.of(Material.WOOD).strength(2.0f, 2.0f).harvestTool(ToolType.AXE)
+                .lightLevel(l -> 5));
     }
     @Override public BlockRenderType getRenderShape(BlockState state) { return BlockRenderType.MODEL; }
     @Override public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext ctx) {
@@ -49,18 +50,26 @@ public class ReassessmentTableBlock extends ContainerBlock {
     @Nullable @Override public TileEntity newBlockEntity(IBlockReader reader) {
         return new ReassessmentTableTile();
     }
-    @Override public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
+
+    @Override
+    public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
+        if(rand.nextInt(9) < 3) return;
         if(world.getBlockEntity(pos) instanceof ReassessmentTableTile) {
-            ReassessmentTableTile tile = ((ReassessmentTableTile) world.getBlockEntity(pos));
-            if(tile.getRecipe() != null) {
-                world.addParticle(ParticleTypes.EXPLOSION_EMITTER,
-                        pos.getX() + 0.5f, pos.getY() + 0.25, pos.getZ()+0.5,
-                        0.0D, -0.025D, 0.0D);
+            ReassessmentTableTile tile = (ReassessmentTableTile)world.getBlockEntity(pos);
+            double x = pos.getX() + 0.5D;
+            double y = pos.getY() + 1.0D;
+            double z = pos.getZ() + 0.5D;
+            double randomA = rand.nextInt(2) - 0.4;
+            double randomB = rand.nextInt(2) - 0.3;
+            if(tile.isValid){
+                world.addParticle(ParticleTypes.SOUL_FIRE_FLAME,
+                        x + randomA, y + 0.45 + randomA-randomB, z + randomB,
+                        0.0D, 0.025D, 0.0D);
             }
         }
     }
-    @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState nextState, boolean bool) {
+
+    @Override public void onRemove(BlockState state, World world, BlockPos pos, BlockState nextState, boolean bool) {
         if(!world.isClientSide && world.getBlockEntity(pos) instanceof ReassessmentTableTile) {
             ReassessmentTableTile te = (ReassessmentTableTile)world.getBlockEntity(pos);
             te.invalidatePillars();
@@ -69,7 +78,6 @@ public class ReassessmentTableBlock extends ContainerBlock {
         }
         super.onRemove(state, world, pos, nextState, bool);
     }
-
     @Override public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player,
                                           Hand hand, BlockRayTraceResult hit) {
         if(!world.isClientSide) {

@@ -20,6 +20,7 @@ import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.supcm.enhancedenchanting.common.block.entity.MatrixTile;
@@ -72,9 +73,13 @@ public class MatrixBlock extends ContainerBlock{
                     } else if (handItem.getItem() == ItemRegister.LAVA_CRYSTAL.get()) {
                         if (!tile.handler.getStackInSlot(0).isEmpty()) {
                             if (!player.isCreative()) {
-                                if (player.experienceLevel < 5) return ActionResultType.PASS;
+                                if (player.experienceLevel < 3 && !player.isCreative()) {
+                                    player.sendMessage(new TranslationTextComponent("enchanting.notenoughxp",
+                                            0), player.getUUID());
+                                    return ActionResultType.PASS;
+                                }
                                 handItem.shrink(1);
-                                player.onEnchantmentPerformed(handItem, 5);
+                                player.onEnchantmentPerformed(handItem, 3);
                             }
                             world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL,
                                     SoundCategory.BLOCKS, 1f, 1f);

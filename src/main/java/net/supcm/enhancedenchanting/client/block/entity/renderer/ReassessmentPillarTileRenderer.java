@@ -22,7 +22,6 @@ import net.supcm.enhancedenchanting.common.init.ItemRegister;
 import org.lwjgl.opengl.GL11;
 
 public class ReassessmentPillarTileRenderer extends TileEntityRenderer<ReassessmentPillarTile> {
-    public static int[] conceptions = new int[6];
     private final ResourceLocation EFFECT_TEXTURE = new ResourceLocation(EnhancedEnchanting.MODID,
             "textures/block/reassessment_circle.png");
     final float s = 0.55F;
@@ -39,11 +38,11 @@ public class ReassessmentPillarTileRenderer extends TileEntityRenderer<Reassessm
             Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemCameraTransforms.TransformType.FIXED, combinedLight,
                     combinedOverlay, ms, buffer);
             ms.popPose();
-            if(hasRightConception(stack)){
+            if(hasRightConception(stack, te.conceptions)){
                 ms.pushPose();
                 ms.translate(0.5, 1.05, 0.5);
                 ms.mulPose(Vector3f.XN.rotationDegrees(180f));
-                ms.scale(s, s, s);
+                ms.scale(0.75f, 0.75f, 0.75f);
                 renderEffect(ms, te,
                         ((ItemRegister.ConceptionItem) stack.getItem()).getColor()[0],
                         ((ItemRegister.ConceptionItem) stack.getItem()).getColor()[1],
@@ -52,39 +51,41 @@ public class ReassessmentPillarTileRenderer extends TileEntityRenderer<Reassessm
             }
         }
     }
-    boolean hasRightConception(ItemStack stack) {
+    boolean hasRightConception(ItemStack stack, int[] conceptions) {
         boolean hasRightItemStack = false;
-        for(int i = 0; i < conceptions.length; i++) {
-            if(conceptions[i] != 0){
-                if (i == 0) {
-                    if (stack.getItem() == ItemRegister.CONCEPTION_BEAUTY.get()) {
-                        hasRightItemStack = true;
-                        break;
-                    }
-                } else if (i == 1) {
-                    if (stack.getItem() == ItemRegister.CONCEPTION_CREATION.get()) {
-                        hasRightItemStack = true;
-                        break;
-                    }
-                } else if (i == 2) {
-                    if (stack.getItem() == ItemRegister.CONCEPTION_ART.get()) {
-                        hasRightItemStack = true;
-                        break;
-                    }
-                } else if (i == 3) {
-                    if (stack.getItem() == ItemRegister.CONCEPTION_TRUTH.get()) {
-                        hasRightItemStack = true;
-                        break;
-                    }
-                } else if (i == 4) {
-                    if (stack.getItem() == ItemRegister.CONCEPTION_SOUL.get()) {
-                        hasRightItemStack = true;
-                        break;
-                    }
-                } else {
-                    if (stack.getItem() == ItemRegister.CONCEPTION_LIES.get()) {
-                        hasRightItemStack = true;
-                        break;
+        if(conceptions != null){
+            for (int i = 0; i < conceptions.length; i++) {
+                if (conceptions[i] != 0) {
+                    if (i == 0) {
+                        if (stack.getItem() == ItemRegister.CONCEPTION_BEAUTY.get()) {
+                            hasRightItemStack = true;
+                            break;
+                        }
+                    } else if (i == 1) {
+                        if (stack.getItem() == ItemRegister.CONCEPTION_CREATION.get()) {
+                            hasRightItemStack = true;
+                            break;
+                        }
+                    } else if (i == 2) {
+                        if (stack.getItem() == ItemRegister.CONCEPTION_ART.get()) {
+                            hasRightItemStack = true;
+                            break;
+                        }
+                    } else if (i == 3) {
+                        if (stack.getItem() == ItemRegister.CONCEPTION_TRUTH.get()) {
+                            hasRightItemStack = true;
+                            break;
+                        }
+                    } else if (i == 4) {
+                        if (stack.getItem() == ItemRegister.CONCEPTION_SOUL.get()) {
+                            hasRightItemStack = true;
+                            break;
+                        }
+                    } else {
+                        if (stack.getItem() == ItemRegister.CONCEPTION_LIES.get()) {
+                            hasRightItemStack = true;
+                            break;
+                        }
                     }
                 }
             }

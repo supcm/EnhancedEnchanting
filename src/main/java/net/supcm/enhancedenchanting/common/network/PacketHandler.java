@@ -19,11 +19,11 @@ public class PacketHandler {
                 T2ListPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
         CHANNEL.registerMessage(index++, T3ListPacket.class, T3ListPacket::save, T3ListPacket::load,
                 T3ListPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
-        CHANNEL.registerMessage(index++, MatrixDoCraftPacket.class, MatrixDoCraftPacket::save, MatrixDoCraftPacket::load,
-                MatrixDoCraftPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+        /*CHANNEL.registerMessage(index++, MatrixDoCraftPacket.class, MatrixDoCraftPacket::save, MatrixDoCraftPacket::load,
+                MatrixDoCraftPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));*/
         CHANNEL.registerMessage(index++, CodexScreenPacket.class, CodexScreenPacket::save, CodexScreenPacket::load,
-                CodexScreenPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+                CodexScreenPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));/*
         CHANNEL.registerMessage(index++, ReassessmentPacket.class, ReassessmentPacket::save, ReassessmentPacket::load,
-                ReassessmentPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+                ReassessmentPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));*/
     }
 }

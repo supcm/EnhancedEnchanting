@@ -61,7 +61,6 @@ public class EnchantingStationTile extends TileEntity implements ITickableTileEn
         tag.putInt("Tick", tick);
         return super.save(tag);
     }
-
     @Override public SUpdateTileEntityPacket getUpdatePacket() {
         return new SUpdateTileEntityPacket(getBlockPos(), -90, getUpdateTag());
     }

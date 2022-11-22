@@ -32,8 +32,7 @@ public class ReassessmentPillarBlock extends ContainerBlock {
             Block.box(0, 14, 0, 16, 16, 16)
     ).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
     public ReassessmentPillarBlock() {
-        super(Properties.of(Material.WOOD).strength(2.0f, 2.0f).requiresCorrectToolForDrops()
-                .harvestTool(ToolType.AXE));
+        super(Properties.of(Material.WOOD).strength(2.0f, 2.0f).harvestTool(ToolType.AXE));
     }
     @Nullable @Override public TileEntity newBlockEntity(IBlockReader world) {
         return new ReassessmentPillarTile();
@@ -45,6 +44,8 @@ public class ReassessmentPillarBlock extends ContainerBlock {
     @Override public void onRemove(BlockState state, World world, BlockPos pos, BlockState nextState, boolean bool) {
         if(!world.isClientSide && world.getBlockEntity(pos) instanceof ReassessmentPillarTile) {
             ReassessmentPillarTile te = (ReassessmentPillarTile)world.getBlockEntity(pos);
+            /*te.tile.invalidatePillars();
+            te.tile = null;*/
             world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(),
                     te.handler.getStackInSlot(0)));
         }
