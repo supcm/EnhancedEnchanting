@@ -11,6 +11,8 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
@@ -44,8 +46,6 @@ public class ReassessmentPillarBlock extends ContainerBlock {
     @Override public void onRemove(BlockState state, World world, BlockPos pos, BlockState nextState, boolean bool) {
         if(!world.isClientSide && world.getBlockEntity(pos) instanceof ReassessmentPillarTile) {
             ReassessmentPillarTile te = (ReassessmentPillarTile)world.getBlockEntity(pos);
-            /*te.tile.invalidatePillars();
-            te.tile = null;*/
             world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(),
                     te.handler.getStackInSlot(0)));
         }
@@ -58,14 +58,20 @@ public class ReassessmentPillarBlock extends ContainerBlock {
                 if(world.getBlockEntity(pos) instanceof ReassessmentPillarTile) {
                     ReassessmentPillarTile tile = ((ReassessmentPillarTile) world.getBlockEntity(pos));
                     tile.insertOrExtractItem(player, 0);
+                    world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
                 }
             }
         } else {
-            double x = pos.getX() + 0.5D;
-            double y = pos.getY() + 1.25D;
-            double z = pos.getZ() + 0.5D;
-            world.addParticle(ParticleTypes.ENCHANTED_HIT, x, y, z, 0.0D, 0.025D,
-                    0.0D);
+            if(world.getBlockEntity(pos) instanceof ReassessmentPillarTile) {
+                ReassessmentPillarTile tile = ((ReassessmentPillarTile) world.getBlockEntity(pos));
+                if(!tile.handler.getStackInSlot(0).isEmpty()){
+                    double x = pos.getX() + 0.5D;
+                    double y = pos.getY() + 1.25D;
+                    double z = pos.getZ() + 0.5D;
+                    world.addParticle(ParticleTypes.ENCHANTED_HIT, x, y, z, 0.0D, 0.025D,
+                            0.0D);
+                }
+            }
         }
         return ActionResultType.PASS;
     }

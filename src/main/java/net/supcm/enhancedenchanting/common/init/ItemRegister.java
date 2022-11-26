@@ -25,6 +25,8 @@ public class ItemRegister {
     public static Rarity FORBIDDEN = Rarity.create("Forbidden", TextFormatting.DARK_RED);
     public static Rarity CONCEPTION = Rarity.create("Conception", TextFormatting.GOLD);
 
+    public static final RegistryObject<Item> LAVA_CRYSTAL = ITEMS.register("lava_crystal", () ->
+            new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB)));
     public static final RegistryObject<Item> STAR = ITEMS.register("star", () ->
             new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB).rarity(Rarity.RARE)));
     public static final RegistryObject<Item> ENCHANTED_STAR = ITEMS.register("enchanted_star", () ->
@@ -33,8 +35,6 @@ public class ItemRegister {
                     return true;
                 }
             });
-    public static final RegistryObject<Item> CRYSTAL_EMPTY = ITEMS.register("xp_crystal_empty",
-            () -> new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB)));
     public static final RegistryObject<Item> CORE = ITEMS.register("core", () ->
             new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> ENCHANTED_CORE = ITEMS.register("enchanted_core", () ->
@@ -51,12 +51,12 @@ public class ItemRegister {
             new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> OVERLOADING_MECH = ITEMS.register("overloading_mech", () ->
             new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB).rarity(Rarity.EPIC)));
-    public static final RegistryObject<Item> LAVA_CRYSTAL = ITEMS.register("lava_crystal", () ->
-            new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB)));
     public static final RegistryObject<Item> CLAY_PLATE = ITEMS.register("clay_plate", () ->
             new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB)));
     public static final RegistryObject<Item> PLATE = ITEMS.register("plate", () ->
             new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB)));
+    public static final RegistryObject<Item> CRYSTAL_EMPTY = ITEMS.register("xp_crystal_empty",
+            () -> new Item(new Item.Properties().tab(EnhancedEnchanting.EETAB)));
     public static final RegistryObject<Item> CRYSTAL = ITEMS.register("xp_crystal", XpCrystalItem::new);
     public static final RegistryObject<Item> CASKET = ITEMS.register("glyphs_casket", GlyphsCasketItem::new);
     public static final RegistryObject<Item> CODEX = ITEMS.register("codex", CodexItem::new);

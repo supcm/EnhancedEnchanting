@@ -1,13 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "POP",
-    "LHL",
+    "PAP",
+    "LOL",
     "I#I"
   ],
   "key": {
-    "H": {
-      "item": "enhancedenchanting:enchanted_heart"
+    "A": {
+      "item": "minecraft:anvil"
     },
     "#": {
       "item": "enhancedenchanting:stabilizer"

@@ -4,6 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
@@ -14,6 +15,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -73,7 +75,7 @@ public class ReassessmentTableTileRenderer extends TileEntityRenderer<Reassessme
                             != BlockRegister.REASSESSMENT_PILLAR.get().defaultBlockState()) {
                         ms.pushPose();
                         ms.translate(i, 0, j);
-                        if (tile.getLevel().getBlockState(pos.south(j)).getBlock() == Blocks.AIR)
+                        if (tile.getLevel().getBlockState(pos.south(j)).getMaterial() == Material.AIR)
                             renderInvalidPillar(ms, buffer);
                         else
                             renderInvalidBlock(ms, buffer);
@@ -84,14 +86,14 @@ public class ReassessmentTableTileRenderer extends TileEntityRenderer<Reassessme
                             != BlockRegister.REASSESSMENT_PILLAR.get().defaultBlockState()) {
                         ms.pushPose();
                         ms.translate(i, 0, j);
-                        if (tile.getLevel().getBlockState(pos.south(j).east(i)).getBlock() == Blocks.AIR)
+                        if (tile.getLevel().getBlockState(pos.south(j).east(i)).getMaterial() == Material.AIR)
                             renderInvalidPillar(ms, buffer);
                         else
                             renderInvalidBlock(ms, buffer);
                         ms.popPose();
                     }
                 } else if(!(i == 0 && j == 0)){
-                    if(tile.getLevel().getBlockState(pos.south(j).east(i)) != Blocks.AIR.defaultBlockState()){
+                    if(tile.getLevel().getBlockState(pos.south(j).east(i)).getMaterial() != Material.AIR){
                         ms.pushPose();
                         ms.translate(i, 0, j);
                         renderInvalidBlock(ms, buffer);

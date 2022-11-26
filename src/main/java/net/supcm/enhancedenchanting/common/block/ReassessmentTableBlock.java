@@ -12,6 +12,8 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
@@ -94,10 +96,12 @@ public class ReassessmentTableBlock extends ContainerBlock {
                     tile.updateRecipe();
                     if(handItem.getItem() != ItemRegister.CRYSTAL.get()) {
                         tile.insertOrExtractItem(player, 0);
+                        world.playSound(null, pos, SoundEvents.ENDER_CHEST_OPEN, SoundCategory.BLOCKS, 1.0f, 1.0f);
                     } else if(tile.getRecipe() != null){
                         tile.createResult();
                         if(!player.isCreative())
                             handItem.shrink(1);
+                        world.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
                     }
                     return ActionResultType.SUCCESS;
                 }

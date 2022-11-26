@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.supcm.enhancedenchanting.common.data.recipes.UsingConfigCondition;
+import net.supcm.enhancedenchanting.common.data.recipes.DisabledCondition;
 import net.supcm.enhancedenchanting.common.init.*;
 import net.supcm.enhancedenchanting.common.network.PacketHandler;
 
@@ -51,6 +51,6 @@ public class EnhancedEnchanting {
     public void commonSetup(FMLCommonSetupEvent e) { PacketHandler.init(); }
     @SubscribeEvent
     public void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> e) {
-        CraftingHelper.register(UsingConfigCondition.Serializer.INSTANCE);
+        CraftingHelper.register(DisabledCondition.Serializer.INSTANCE);
     }
 }

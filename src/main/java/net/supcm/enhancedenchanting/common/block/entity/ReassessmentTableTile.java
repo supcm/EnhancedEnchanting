@@ -3,6 +3,7 @@ package net.supcm.enhancedenchanting.common.block.entity;
 import com.google.common.collect.Maps;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -128,7 +129,7 @@ public class ReassessmentTableTile extends TileEntity implements ITickableTileEn
         updateRecipe();
     }
     private int[] createConceptions() {
-        int[] conceptions = new int[6];
+        int[] conceptions = new int[] {0, 0, 0, 0, 0, 0};
         for(ItemStack stack : pillars.values()) {
             if(stack.getItem() == ItemRegister.CONCEPTION_BEAUTY.get()){
                 conceptions[0] = stack.getCount();
@@ -140,7 +141,7 @@ public class ReassessmentTableTile extends TileEntity implements ITickableTileEn
                 conceptions[3] = stack.getCount();
             } else if(stack.getItem() == ItemRegister.CONCEPTION_SOUL.get()){
                 conceptions[4] = stack.getCount();
-            } else
+            } else if(stack.getItem() == ItemRegister.CONCEPTION_LIES.get())
                 conceptions[5] = stack.getCount();
         }
         return conceptions;
@@ -155,7 +156,8 @@ public class ReassessmentTableTile extends TileEntity implements ITickableTileEn
                 if (recipe.getIngredients().get(0).test(handler.getStackInSlot(0))) {
                     boolean isVal = true;
                     for (int i = 0; i < conceptions.length; i++) {
-                        if (conceptions[i] < recipe.getConceptions()[i]) {
+                        if (recipe.getConceptions()[i] != 0 &&
+                                conceptions[i] < recipe.getConceptions()[i]) {
                             isVal = false;
                             break;
                         }
@@ -222,7 +224,7 @@ public class ReassessmentTableTile extends TileEntity implements ITickableTileEn
                         k++;
                     }
                 } else {
-                    if ((level.getBlockState(pos.north(i).west(j)).getBlock() != Blocks.AIR) &&
+                    if (level.getBlockState(pos.north(i).west(j)).getMaterial() != Material.AIR &&
                             !(i == 0 && j == 0))
                         valid = false;
                 }

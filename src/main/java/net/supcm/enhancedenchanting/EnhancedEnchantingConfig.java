@@ -11,7 +11,7 @@ public class EnhancedEnchantingConfig {
     public static final ForgeConfigSpec.ConfigValue<Boolean> DISABLE_VANILLA;
     public static final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_DESCRIPTIONS_IN_CODEX;
     public static final ForgeConfigSpec.ConfigValue<Integer> ENCHANTING_MULT;
-    public static final ForgeConfigSpec.ConfigValue<List<String>>  T2_LIST;
+    public static final ForgeConfigSpec.ConfigValue<List<String>> T2_LIST;
 
     static {
         BUILDER.push("Configuration file for EnhancedEnchanting");

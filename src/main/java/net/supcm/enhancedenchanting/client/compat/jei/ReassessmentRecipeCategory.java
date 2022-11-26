@@ -37,6 +37,18 @@ public class ReassessmentRecipeCategory implements IRecipeCategory<ReassessmentR
     @Override public void setIngredients(ReassessmentRecipe recipe, IIngredients ingredients) {
         List<Ingredient> list = new ArrayList<>(recipe.getIngredients());
         list.add(Ingredient.of(new ItemStack(ItemRegister.CRYSTAL.get())));
+        if(recipe.getConceptions()[0] != 0)
+            list.add(Ingredient.of(new ItemStack(ItemRegister.CONCEPTION_BEAUTY.get(), recipe.getConceptions()[0])));
+        if(recipe.getConceptions()[1] != 0)
+            list.add(Ingredient.of(new ItemStack(ItemRegister.CONCEPTION_CREATION.get(), recipe.getConceptions()[1])));
+        if(recipe.getConceptions()[2] != 0)
+            list.add(Ingredient.of(new ItemStack(ItemRegister.CONCEPTION_ART.get(), recipe.getConceptions()[2])));
+        if(recipe.getConceptions()[3] != 0)
+            list.add(Ingredient.of(new ItemStack(ItemRegister.CONCEPTION_TRUTH.get(), recipe.getConceptions()[3])));
+        if(recipe.getConceptions()[4] != 0)
+            list.add(Ingredient.of(new ItemStack(ItemRegister.CONCEPTION_SOUL.get(), recipe.getConceptions()[4])));
+        if(recipe.getConceptions()[5] != 0)
+            list.add(Ingredient.of(new ItemStack(ItemRegister.CONCEPTION_LIES.get(), recipe.getConceptions()[5])));
         ingredients.setInputIngredients(list);
         ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
     }
@@ -51,7 +63,7 @@ public class ReassessmentRecipeCategory implements IRecipeCategory<ReassessmentR
         recipeLayout.getItemStacks().init(6, true, 56, 42);
         recipeLayout.getItemStacks().init(7, true, 29, 58);
         recipeLayout.getItemStacks().init(8, false, 119, 30);
-        if(recipe.getConceptions()[0] != 0)
+        /*if(recipe.getConceptions()[0] != 0)
             recipeLayout.getItemStacks().set(2, new ItemStack(ItemRegister.CONCEPTION_BEAUTY.get(),
                     recipe.getConceptions()[0]));
         if(recipe.getConceptions()[1] != 0)
@@ -68,7 +80,7 @@ public class ReassessmentRecipeCategory implements IRecipeCategory<ReassessmentR
                     recipe.getConceptions()[4]));
         if(recipe.getConceptions()[5] != 0)
             recipeLayout.getItemStacks().set(7, new ItemStack(ItemRegister.CONCEPTION_LIES.get(),
-                    recipe.getConceptions()[5]));
+                    recipe.getConceptions()[5]));*/
         recipeLayout.getItemStacks().set(ingredients);
     }
 }

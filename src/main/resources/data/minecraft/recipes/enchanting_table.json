@@ -1,7 +1,7 @@
 {
   "conditions": [
     {
-      "type" : "enhancedenchanting:using_config"
+      "type" : "enhancedenchanting:disabled"
     }
   ],
   "type": "minecraft:crafting_shaped",

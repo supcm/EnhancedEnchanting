@@ -16,10 +16,10 @@
       "item": "enhancedenchanting:stabilizer"
     },
     "C": {
-      "item": "enhancedenchanting:enchanted_core"
+      "item": "enhancedenchanting:core"
     },
     "M": {
-      "item": "enhancedenchanting:star"
+      "tag": "enhancedenchanting:symbols"
     },
     "#": {
       "tag": "forge:ingots/iron"
