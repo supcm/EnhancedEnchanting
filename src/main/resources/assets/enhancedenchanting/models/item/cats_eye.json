@@ -1,0 +1,9 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "enhancedenchanting:item/cats_eye"
+  },
+  "overrides" : [
+    { "predicate" :  { "enhancedenchanting:opened" :  1.0 }, "model": "enhancedenchanting:item/cats_eye_activated" }
+  ]
+}

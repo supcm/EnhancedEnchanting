@@ -5,8 +5,10 @@ import net.minecraft.client.gui.screen.EnchantmentScreen;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.TableLootEntry;
@@ -260,6 +262,36 @@ public class EventHandler {
                         ReassessmentTableTileRenderer::new);
                 ClientRegistry.bindTileEntityRenderer(TileRegister.REASSESSMENT_PILLAR_TILE_TYPE.get(),
                         ReassessmentPillarTileRenderer::new);
+                ClientRegistry.bindTileEntityRenderer(TileRegister.WORD_ERASER_TILE_TYPE.get(),
+                        WordEraserTileRenderer::new);
+                ItemModelsProperties.register(ItemRegister.SHADOW_CRYSTAL.get(),
+                        new ResourceLocation(EnhancedEnchanting.MODID, "shadow"),
+                        (stack, world, entity) -> {
+                            if(stack.getTag() != null && !stack.getTag().getBoolean("InShadow"))
+                                return 1.0f;
+                            return 0.0f;
+                        });
+                ItemModelsProperties.register(ItemRegister.CATS_EYE.get(),
+                        new ResourceLocation(EnhancedEnchanting.MODID, "opened"),
+                        (stack, world, entity) -> {
+                            if(stack.getTag() != null && stack.getTag().getBoolean("Activated"))
+                                return 1.0f;
+                            return 0.0f;
+                        });
+                ItemModelsProperties.register(ItemRegister.WISDOM_SEED.get(),
+                        new ResourceLocation(EnhancedEnchanting.MODID, "fullness"),
+                        (stack, world, entity) -> {
+                            if(stack.getTag() != null) {
+                                int stored = stack.getTag().getInt("Stored");
+                                if(stored >= 128)
+                                    return 3.0f;
+                                else if(stored >= 64)
+                                    return 2.0f;
+                                else if(stored >= 16)
+                                    return 1.0f;
+                            }
+                            return 0.0f;
+                        });
             });
             RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegister.GUARDIAN.get(),
                     GuardianRenderer::new);

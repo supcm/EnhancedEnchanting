@@ -2,7 +2,6 @@ package net.supcm.enhancedenchanting.common.block.entity;
 
 import com.google.common.collect.Maps;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,7 +15,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.supcm.enhancedenchanting.common.data.recipes.ReassessmentRecipe;
@@ -78,9 +76,21 @@ public class ReassessmentTableTile extends TileEntity implements ITickableTileEn
     public ReassessmentRecipe getRecipe() { return recipe; }
     public void insertOrExtractItem(PlayerEntity player, int slot) {
         if(!(handler.getStackInSlot(slot).isEmpty() || player.getItemInHand(Hand.MAIN_HAND).isEmpty()) &&
-                player.getItemInHand(Hand.MAIN_HAND).getItem() == handler.getStackInSlot(slot).getItem()) {
-            player.getItemInHand(Hand.MAIN_HAND).grow(handler.getStackInSlot(slot).getCount());
-            handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false);
+                (player.getItemInHand(Hand.MAIN_HAND).getItem() == handler.getStackInSlot(slot).getItem())) {
+            if(player.getItemInHand(Hand.MAIN_HAND).getCount() + handler.getStackInSlot(slot).getCount()
+                    <= player.getItemInHand(Hand.MAIN_HAND).getMaxStackSize()) {
+                player.getItemInHand(Hand.MAIN_HAND).grow(handler.getStackInSlot(slot).getCount());
+                handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false);
+            } else {
+                if(player.inventory.getFreeSlot() != -1)
+                    player.addItem(handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false));
+                else
+                    level.addFreshEntity(new ItemEntity(level,
+                        player.blockPosition().getX() + 0.5,
+                        player.blockPosition().getY() + 0.5,
+                        player.blockPosition().getZ() + 0.5,
+                        handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false)));
+            }
         } else if(player.getItemInHand(Hand.MAIN_HAND).isEmpty()){
             if(player.inventory.getFreeSlot() != -1)
                 player.addItem(handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false));

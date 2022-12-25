@@ -69,6 +69,10 @@ public class ItemRegister {
     public static final RegistryObject<Item> CONCEPTION_CREATION = createConception("creation", new float[]{0.6f, 1f, 0.6f});
     public static final RegistryObject<Item> CONCEPTION_TRUTH = createConception("truth", new float[]{0.9f, 0.9f, 0.9f});
     public static final RegistryObject<Item> CONCEPTION_LIES = createConception("lies", new float[]{1f, 0.3f, 0.3f});
+    public static final RegistryObject<Item> SHADOW_CRYSTAL = ITEMS.register("shadow_crystal", ShadowCrystalItem::new);
+    public static final RegistryObject<Item> RETURNING_PEARL = ITEMS.register("returning_pearl", ReturningPearlItem::new);
+    public static final RegistryObject<Item> CATS_EYE = ITEMS.register("cats_eye", CatsEyeItem::new);
+    public static final RegistryObject<Item> WISDOM_SEED = ITEMS.register("wisdom_seed", WisdomSeedItem::new);
     public static final RegistryObject<Item> OKU = createSymbol("oku");
     public static final RegistryObject<Item> GEO = createSymbol("geo");
     public static final RegistryObject<Item> ARA = createSymbol("ara");

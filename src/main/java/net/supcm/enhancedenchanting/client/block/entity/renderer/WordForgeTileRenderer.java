@@ -1,12 +1,16 @@
 package net.supcm.enhancedenchanting.client.block.entity.renderer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -16,23 +20,22 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.supcm.enhancedenchanting.EnhancedEnchanting;
 import net.supcm.enhancedenchanting.common.block.entity.WordForgeTile;
 import net.supcm.enhancedenchanting.common.enchantments.EnchantmentsList;
-
+import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.List;
 
 public class WordForgeTileRenderer extends TileEntityRenderer<WordForgeTile> {
-
     public static List<String> T2_LIST = new ArrayList<>();
     public static List<String> T3_LIST = new ArrayList<>();
-
     public WordForgeTileRenderer(TileEntityRendererDispatcher manager) { super(manager); }
     @Override public void render(WordForgeTile te, float partialTicks, MatrixStack ms,
-                       IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay ) {
+                                 IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay ) {
         ItemStack stack = te.handler.getStackInSlot(0);
         ItemStack stack1 = te.handler.getStackInSlot(1);
         ItemStack stack2 = te.handler.getStackInSlot(2);
         {
             float s = 0.55F;
+            renderGlyphs(te, ms, buffer, combinedLight, combinedOverlay);
             if (te.enchLevel != -1 && (!stack.isEmpty() || !stack1.isEmpty() || !stack2.isEmpty())) {
                 ms.pushPose();
                 ms.translate(0.5, 1.85, 0.5);
@@ -42,11 +45,11 @@ public class WordForgeTileRenderer extends TileEntityRenderer<WordForgeTile> {
                 String text = String.valueOf(te.enchLevel);
                 float width = (float) (-fontrenderer.width(text) / 2);
                 Matrix4f text_matrix = ms.last().pose();
-                ms.popPose();
                 fontrenderer.drawInBatch(text, width, 0f,
                         0x67ff67, false, text_matrix, buffer, false,
                         (int)(Minecraft.getInstance().options.getBackgroundOpacity(0.33F) * 255.0F) << 24,
                         combinedLight);
+                ms.popPose();
             }
             if (!stack.isEmpty()) {
                 ms.pushPose();
@@ -166,5 +169,50 @@ public class WordForgeTileRenderer extends TileEntityRenderer<WordForgeTile> {
                 }
             }
         }
+    }
+    void renderGlyphs(WordForgeTile te, MatrixStack ms, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+        ms.pushPose();
+        ms.translate(0.5, 1.75, 0.5);
+        ms.mulPose(Minecraft.getInstance().getEntityRenderDispatcher().cameraOrientation());
+        ms.translate(0.08 * te.handler.getSlots(), 0.15, 0);
+        ms.scale(0.25f, 0.25f, 0.25f);
+        for (int i = 0; i < te.handler.getSlots(); i++) {
+            if(!te.handler.getStackInSlot(i).isEmpty())
+                Minecraft.getInstance().getItemRenderer().renderStatic(te.handler.getStackInSlot(i),
+                        ItemCameraTransforms.TransformType.FIXED, 15728880, combinedOverlay, ms, buffer);
+                //renderGlyph(te, ms, i);
+            ms.translate(-1, 0, 0);
+        }
+        ms.popPose();
+    }
+    private void renderGlyph(WordForgeTile te, MatrixStack ms, int slot) {
+        ms.pushPose();
+        RenderSystem.disableLighting();
+        RenderSystem.enableBlend();
+        RenderSystem.enableDepthTest();
+        RenderSystem.blendFunc(GL11.GL_SRC_COLOR, GL11.GL_ONE_MINUS_SRC_COLOR);
+        RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+        RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        ms.mulPose(Vector3f.YN.rotationDegrees(180f));
+        ms.mulPose(Vector3f.XN.rotationDegrees(90f));
+        Matrix4f mm = ms.last().pose();
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder buffer = tessellator.getBuilder();
+        Minecraft.getInstance().getTextureManager().bind(getGlyphTexture(te, slot));
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+        buffer.vertex(mm,0.5f, 0, 0.5f).uv(0, 0).endVertex();
+        buffer.vertex(mm,-0.5f, 0, 0.5f).uv(1, 0).endVertex();
+        buffer.vertex(mm,-0.5f, 0, -0.5f).uv(1, 1).endVertex();
+        buffer.vertex(mm,0.5f, 0, -0.5f).uv(0, 1).endVertex();
+        tessellator.end();
+        RenderSystem.disableDepthTest();
+        RenderSystem.disableBlend();
+        RenderSystem.enableLighting();
+        ms.popPose();
+    }
+    private ResourceLocation getGlyphTexture(WordForgeTile tile, int slot) {
+        return new ResourceLocation(EnhancedEnchanting.MODID,
+                "textures/item/" + tile.handler.getStackInSlot(slot).getItem().getRegistryName().getPath()
+                        + ".png");
     }
 }

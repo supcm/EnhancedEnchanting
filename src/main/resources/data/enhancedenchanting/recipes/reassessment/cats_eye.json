@@ -1,0 +1,17 @@
+{
+  "type": "enhancedenchanting:reassessment",
+  "conceptions": [
+    0,
+    2,
+    0,
+    3,
+    1,
+    0
+  ],
+  "input": {
+    "item": "minecraft:ender_eye"
+  },
+  "output": {
+    "item": "enhancedenchanting:cats_eye"
+  }
+}

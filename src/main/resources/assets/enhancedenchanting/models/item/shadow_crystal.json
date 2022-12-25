@@ -1,0 +1,9 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "enhancedenchanting:item/shadow_crystal"
+  },
+  "overrides" : [
+    { "predicate" :  { "enhancedenchanting:shadow" :  1.0 }, "model": "enhancedenchanting:item/shadow_crystal_inactive" }
+  ]
+}

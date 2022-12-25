@@ -1,7 +1,7 @@
 {
     "textures": {
         "enchanter": "enhancedenchanting:block/enchanted_table",
-		"particle": "minecraft:block/obsidian"
+		"particle": "enhancedenchanting:block/enchanted_table"
     },
     "display": {
         "gui": {

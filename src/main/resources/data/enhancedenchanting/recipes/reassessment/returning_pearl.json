@@ -1,0 +1,17 @@
+{
+  "type": "enhancedenchanting:reassessment",
+  "conceptions": [
+    2,
+    0,
+    1,
+    0,
+    0,
+    2
+  ],
+  "input": {
+    "item": "minecraft:chorus_fruit"
+  },
+  "output": {
+    "item": "enhancedenchanting:returning_pearl"
+  }
+}

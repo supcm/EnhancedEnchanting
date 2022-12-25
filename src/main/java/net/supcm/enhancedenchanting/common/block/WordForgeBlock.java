@@ -7,8 +7,7 @@ import net.minecraft.block.ContainerBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -99,7 +98,12 @@ public class WordForgeBlock extends ContainerBlock {
                         tile.getEnchLevel(0);
                     }
                 } else {
-                        if (handItem.getItem() == Items.BOOK) {
+                        if (handItem.getItem() == Items.BOOK ||
+                                handItem.getItem() instanceof ToolItem ||
+                                handItem.getItem() instanceof SwordItem ||
+                                handItem.getItem() instanceof BowItem ||
+                                handItem.getItem() instanceof CrossbowItem ||
+                                handItem.getItem() instanceof TridentItem) {
                             boolean isTier2 = !tile.handler.getStackInSlot(0).isEmpty()
                                     && !tile.handler.getStackInSlot(1).isEmpty() &&
                                     tile.handler.getStackInSlot(2).isEmpty();

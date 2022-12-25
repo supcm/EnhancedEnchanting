@@ -33,6 +33,8 @@ public class BlockRegister {
             LavaCrystalOreBlock::new);
     public static final RegistryObject<Block> THOUGHT_LOOM = createBlock("thought_loom",
             ThoughtLoomBlock::new);
+    public static final RegistryObject<Block> WORD_ERASER = createBlock("word_eraser",
+            WordEraserBlock::new);
     public static final RegistryObject<Block> REASSESSMENT_TABLE = BLOCKS.register("reassessment_table",
             ReassessmentTableBlock::new);
     public static final RegistryObject<Item> REASSESSMENT_TABLE_ITEM = ItemRegister.ITEMS.register("reassessment_table",

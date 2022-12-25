@@ -1,0 +1,17 @@
+{
+  "type": "enhancedenchanting:reassessment",
+  "conceptions": [
+    2,
+    2,
+    1,
+    1,
+    3,
+    1
+  ],
+  "input": {
+    "item": "enhancedenchanting:xp_crystal_empty"
+  },
+  "output": {
+    "item": "enhancedenchanting:wisdom_seed"
+  }
+}

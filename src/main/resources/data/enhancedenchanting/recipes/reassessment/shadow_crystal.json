@@ -1,0 +1,17 @@
+{
+  "type": "enhancedenchanting:reassessment",
+  "conceptions": [
+    2,
+    0,
+    0,
+    0,
+    1,
+    1
+  ],
+  "input": {
+    "item": "minecraft:emerald"
+  },
+  "output": {
+    "item": "enhancedenchanting:shadow_crystal"
+  }
+}

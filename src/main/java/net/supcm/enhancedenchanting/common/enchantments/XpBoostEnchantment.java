@@ -17,6 +17,5 @@ public class XpBoostEnchantment extends Enchantment {
                 stack.getItem() instanceof BowItem ||
                 stack.getItem() instanceof TridentItem;
     }
-
     @Override public int getMaxLevel() { return 5; }
 }

@@ -6,8 +6,7 @@ import net.minecraft.block.ContainerBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -65,7 +64,12 @@ public class EnchantedTableBlock extends ContainerBlock {
                         world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1f, 1f);
                     } else {
                         if(!tile.handler.getStackInSlot(0).isEmpty()){
-                            if (handItem.getItem() == Items.BOOK) {
+                            if (handItem.getItem() == Items.BOOK ||
+                                    handItem.getItem() instanceof ToolItem ||
+                                    handItem.getItem() instanceof SwordItem ||
+                                    handItem.getItem() instanceof BowItem ||
+                                    handItem.getItem() instanceof CrossbowItem ||
+                                    handItem.getItem() instanceof TridentItem) {
                                 return tile.enchantBook(player, handItem);
                             } else {
                                 return tile.enchantItem(player, handItem);

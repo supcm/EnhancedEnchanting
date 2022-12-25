@@ -21,13 +21,11 @@ public class EnchantmentsList {
         EnchantmentsList.initFirstList();
         EnchantmentsList.initSecondList();
         EnchantmentsList.initThirdList();
-
         for(String rl : EnhancedEnchantingConfig.T2_LIST.get()) {
             Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(rl));
             if(ench != null) T2_LIST.add(ench);
             else System.out.println("Can't add enchantment with ResourceLocation " + rl);
         }
-
         for(int i = 0; i < ForgeRegistries.ENCHANTMENTS.getValues().toArray().length; i++) {
             boolean contains = T1_LIST.contains(ForgeRegistries.ENCHANTMENTS.getValues().toArray()[i]) ||
                     T2_LIST.contains(ForgeRegistries.ENCHANTMENTS.getValues().toArray()[i]) ||
@@ -35,7 +33,6 @@ public class EnchantmentsList {
             if(!contains)
                 T3_LIST.add((Enchantment)ForgeRegistries.ENCHANTMENTS.getValues().toArray()[i]);
         }
-        System.out.println("ALL LIST INITIALIZED");
     }
     public static final List<String> SYMBOLS_LIST = new ArrayList<>();
     public static List<Enchantment> T1_LIST = new ArrayList<>();
@@ -87,6 +84,7 @@ public class EnchantmentsList {
         T2_LIST.add(Enchantments.FISHING_LUCK);
         T2_LIST.add(Enchantments.FISHING_SPEED);
         T2_LIST.add(EnchantmentRegister.XP_BOOST.get());
+        T2_LIST.add(EnchantmentRegister.UNSTABILITY.get());
     }
 
     public static void initThirdList() {

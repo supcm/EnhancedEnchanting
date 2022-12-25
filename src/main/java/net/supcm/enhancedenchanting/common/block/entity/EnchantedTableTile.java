@@ -4,6 +4,8 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.EnchantedBookItem;
@@ -32,6 +34,7 @@ import net.supcm.enhancedenchanting.common.init.TileRegister;
 import net.supcm.enhancedenchanting.common.init.ItemRegister;
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Map;
 
 public class EnchantedTableTile extends TileEntity {
     public final ItemStackHandler handler = new ItemStackHandler(1) {
@@ -76,15 +79,32 @@ public class EnchantedTableTile extends TileEntity {
     }
     @Override public CompoundNBT getUpdateTag() { return save(new CompoundNBT()); }
     @Override public void handleUpdateTag(BlockState state, CompoundNBT tag) { load(state, tag); }
-
     public void insertOrExtractItem(PlayerEntity player, int slot) {
-        if(player.getItemInHand(Hand.MAIN_HAND).getItem() == handler.getStackInSlot(slot).getItem()
-                && !(handler.getStackInSlot(slot).isEmpty() || player.getItemInHand(Hand.MAIN_HAND).isEmpty())) {
-            player.getItemInHand(Hand.MAIN_HAND).grow(handler.getStackInSlot(slot).getCount());
-            handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false);
+        if(!(handler.getStackInSlot(slot).isEmpty() || player.getItemInHand(Hand.MAIN_HAND).isEmpty()) &&
+                (player.getItemInHand(Hand.MAIN_HAND).getItem() == handler.getStackInSlot(slot).getItem())) {
+            if(player.getItemInHand(Hand.MAIN_HAND).getCount() + handler.getStackInSlot(slot).getCount()
+                    <= player.getItemInHand(Hand.MAIN_HAND).getMaxStackSize()) {
+                player.getItemInHand(Hand.MAIN_HAND).grow(handler.getStackInSlot(slot).getCount());
+                handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false);
+            } else {
+                if(player.inventory.getFreeSlot() != -1)
+                    player.addItem(handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false));
+                else
+                    level.addFreshEntity(new ItemEntity(level,
+                            player.blockPosition().getX() + 0.5,
+                            player.blockPosition().getY() + 0.5,
+                            player.blockPosition().getZ() + 0.5,
+                            handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false)));
+            }
         } else if(player.getItemInHand(Hand.MAIN_HAND).isEmpty()){
-            if(player.inventory.getFreeSlot() == -1) return;
-            else player.addItem(handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false));
+            if(player.inventory.getFreeSlot() != -1)
+                player.addItem(handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false));
+            else
+                level.addFreshEntity(new ItemEntity(level,
+                        player.blockPosition().getX() + 0.5,
+                        player.blockPosition().getY() + 0.5,
+                        player.blockPosition().getZ() + 0.5,
+                        handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false)));
         } else {
             player.setItemInHand(Hand.MAIN_HAND, handler.insertItem(slot,
                     player.getItemInHand(Hand.MAIN_HAND), false));
@@ -132,16 +152,22 @@ public class EnchantedTableTile extends TileEntity {
             player.onEnchantmentPerformed(handItem, enchLevel);
             handItem.shrink(1);
         }
-        ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
-        EnchantedBookItem.addEnchantment(stack, new EnchantmentData(ench, count));
-        player.addItem(stack);
+        if(handItem.getItem() == Items.BOOK){
+            ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
+            EnchantedBookItem.addEnchantment(stack, new EnchantmentData(ench, count));
+            player.addItem(stack);
+        } else {
+            Map<Enchantment, Integer> data = EnchantmentHelper.getEnchantments(handItem);
+            data.putIfAbsent(ench, count);
+            EnchantmentHelper.setEnchantments(data, handItem);
+        }
         level.explode(player, getBlockPos().getX() + 0.5D, getBlockPos().getY() + 1.25D,
                 getBlockPos().getZ() + 0.5D, 0.5f, Explosion.Mode.NONE);
         player.awardStat(Stats.ENCHANT_ITEM);
         if (player instanceof ServerPlayerEntity)
-            CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayerEntity)player, stack, 1 | 2);
+            CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayerEntity)player, handItem, 1 | 2);
         setChanged();
-        return ActionResultType.SUCCESS;
+        return ActionResultType.CONSUME;
     }
     public ActionResultType enchantItem(PlayerEntity player, ItemStack handItem) {
         List<GuardianEntity> guardians = level.getEntitiesOfClass(GuardianEntity.class, new AxisAlignedBB(
@@ -179,7 +205,7 @@ public class EnchantedTableTile extends TileEntity {
                     if (player instanceof ServerPlayerEntity)
                         CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayerEntity)player, output, 1 | 2);
                     setChanged();
-                    return ActionResultType.SUCCESS;
+                    return ActionResultType.CONSUME;
                 }
             }
         }

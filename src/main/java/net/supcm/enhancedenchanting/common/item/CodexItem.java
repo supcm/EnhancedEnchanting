@@ -22,6 +22,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.supcm.enhancedenchanting.EnhancedEnchanting;
 import net.supcm.enhancedenchanting.common.enchantments.EnchantmentsList;
+import net.supcm.enhancedenchanting.common.init.EnchantmentRegister;
 import net.supcm.enhancedenchanting.common.network.PacketHandler;
 import net.supcm.enhancedenchanting.common.network.packets.CodexScreenPacket;
 
@@ -54,11 +55,13 @@ public class CodexItem extends Item {
                 EnchantmentsList.T1_LIST.forEach(str ->
                         list.add(StringNBT.valueOf(getGlyphsFor(str.getRegistryName().toString()) +
                                 "'"+ str.getRegistryName().toString())));
+                list.add(StringNBT.valueOf(getGlyphsFor(
+                        EnchantmentRegister.UNSTABILITY.get().getRegistryName().toString()) +
+                        "'" + EnchantmentRegister.UNSTABILITY.get().getRegistryName().toString()));
                 tag.put("Revealed", list);
             }
         }
     }
-
     @Override public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         if(!world.isClientSide) {
             CompoundNBT tag = player.getItemInHand(hand).getOrCreateTag();
@@ -68,7 +71,6 @@ public class CodexItem extends Item {
         }
         return ActionResult.pass(player.getItemInHand(hand));
     }
-
     public static String getGlyphsFor(String resourceLocation) {
         for (Map.Entry<String, Enchantment> entry : EnchantmentsList.T1_MAP.entrySet())
             if(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(resourceLocation))

@@ -1,0 +1,11 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "enhancedenchanting:item/wisdom_seed0"
+  },
+  "overrides" : [
+    { "predicate" :  { "enhancedenchanting:fullness" :  1.0 }, "model": "enhancedenchanting:item/wisdom_seed1" },
+    { "predicate" :  { "enhancedenchanting:fullness" :  2.0 }, "model": "enhancedenchanting:item/wisdom_seed2" },
+    { "predicate" :  { "enhancedenchanting:fullness" :  3.0 }, "model": "enhancedenchanting:item/wisdom_seed3" }
+  ]
+}

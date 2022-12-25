@@ -72,9 +72,21 @@ public class ReassessmentPillarTile extends TileEntity {
     @Override public void handleUpdateTag(BlockState state, CompoundNBT tag) { load(state, tag); }
     public void insertOrExtractItem(PlayerEntity player, int slot) {
         if(!(handler.getStackInSlot(slot).isEmpty() || player.getItemInHand(Hand.MAIN_HAND).isEmpty()) &&
-                player.getItemInHand(Hand.MAIN_HAND).getItem() == handler.getStackInSlot(slot).getItem()) {
-            player.getItemInHand(Hand.MAIN_HAND).grow(handler.getStackInSlot(slot).getCount());
-            handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false);
+                (player.getItemInHand(Hand.MAIN_HAND).getItem() == handler.getStackInSlot(slot).getItem())) {
+            if(player.getItemInHand(Hand.MAIN_HAND).getCount() + handler.getStackInSlot(slot).getCount()
+                    <= player.getItemInHand(Hand.MAIN_HAND).getMaxStackSize()) {
+                player.getItemInHand(Hand.MAIN_HAND).grow(handler.getStackInSlot(slot).getCount());
+                handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false);
+            } else {
+                if(player.inventory.getFreeSlot() != -1)
+                    player.addItem(handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false));
+                else
+                    level.addFreshEntity(new ItemEntity(level,
+                            player.blockPosition().getX() + 0.5,
+                            player.blockPosition().getY() + 0.5,
+                            player.blockPosition().getZ() + 0.5,
+                            handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false)));
+            }
         } else if(player.getItemInHand(Hand.MAIN_HAND).isEmpty()){
             if(player.inventory.getFreeSlot() != -1)
                 player.addItem(handler.extractItem(slot, handler.getStackInSlot(slot).getCount(), false));
