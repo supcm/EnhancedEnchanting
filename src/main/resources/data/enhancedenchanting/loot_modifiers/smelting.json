@@ -1,0 +1,13 @@
+{
+  "type": "enhancedenchanting:smelting",
+  "conditions": [
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "items": [
+            "enhancedenchanting:exaltation_pickaxe"
+        ]
+      }
+    }
+  ]
+}

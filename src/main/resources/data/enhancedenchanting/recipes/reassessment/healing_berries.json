@@ -1,0 +1,18 @@
+{
+  "type": "enhancedenchanting:reassessment",
+  "conceptions": [
+    1,
+    0,
+    0,
+    2,
+    1,
+    1
+  ],
+  "input": {
+    "item": "minecraft:sweet_berries"
+  },
+  "output": {
+    "item": "enhancedenchanting:healing_berries",
+    "count": 8
+  }
+}

@@ -108,7 +108,8 @@ public class WordMachineBlock extends ContainerBlock {
             double z = pos.getZ() + 0.5D;
             player.playSound(SoundEvents.ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
             if(!tile.handler.getStackInSlot(0).isEmpty() || !tile.handler.getStackInSlot(1).isEmpty())
-                world.addParticle(ParticleTypes.ENCHANTED_HIT, x, y, z, 0.0D, 0.025D, 0.0D);
+                world.addParticle(ParticleTypes.ENCHANTED_HIT, x, y, z, 0.0D, 0.025D,
+                        0.0D);
         }
         return ActionResultType.PASS;
     }

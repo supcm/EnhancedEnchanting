@@ -1,0 +1,9 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "enhancedenchanting:item/exaltation_stone"
+  },
+  "overrides" : [
+    { "predicate" :  { "enhancedenchanting:is_ability" :  1.0 }, "model": "enhancedenchanting:item/boost_exaltation_stone" }
+  ]
+}

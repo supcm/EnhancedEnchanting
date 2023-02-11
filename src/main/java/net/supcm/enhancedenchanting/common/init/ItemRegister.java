@@ -14,6 +14,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.supcm.enhancedenchanting.EnhancedEnchanting;
 import net.supcm.enhancedenchanting.common.item.*;
+import net.supcm.enhancedenchanting.common.item.exaltation.*;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -73,6 +74,26 @@ public class ItemRegister {
     public static final RegistryObject<Item> RETURNING_PEARL = ITEMS.register("returning_pearl", ReturningPearlItem::new);
     public static final RegistryObject<Item> CATS_EYE = ITEMS.register("cats_eye", CatsEyeItem::new);
     public static final RegistryObject<Item> WISDOM_SEED = ITEMS.register("wisdom_seed", WisdomSeedItem::new);
+    public static final RegistryObject<Item> GRAVITY_BOMB = ITEMS.register("gravity_bomb", GravityBombItem::new);
+    public static final RegistryObject<Item> ENCHANTED_FEATHER = ITEMS.register("enchanted_feather",
+            EnchantedFeatherItem::new);
+    public static final RegistryObject<Item> HEALING_BERRIES = ITEMS.register("healing_berries",
+            HealingBerriesItem::new);
+    public static final RegistryObject<Item> WIND_FAN = ITEMS.register("wind_fan",
+            WindFanItem::new);
+
+    public static final RegistryObject<Item> INCUBATOR = ITEMS.register("incubator",
+            IncubatorItem::new);
+    public static final RegistryObject<Item> EXALTATION_STONE = ITEMS.register("exaltation_stone",
+            ExaltationStoneItem::new);
+    public static final RegistryObject<Item> EXALTATION_SWORD = ITEMS.register("exaltation_sword",
+            ExaltationSwordItem::new);
+    public static final RegistryObject<Item> EXALTATION_PICKAXE = ITEMS.register("exaltation_pickaxe",
+            ExaltationPickaxeItem::new);
+    public static final RegistryObject<Item> EXALTATION_AXE = ITEMS.register("exaltation_axe",
+            ExaltationAxeItem::new);
+    public static final RegistryObject<Item> EXALTATION_SHOVEL = ITEMS.register("exaltation_shovel",
+            ExaltationShovelItem::new);
     public static final RegistryObject<Item> OKU = createSymbol("oku");
     public static final RegistryObject<Item> GEO = createSymbol("geo");
     public static final RegistryObject<Item> ARA = createSymbol("ara");

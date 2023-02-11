@@ -3,6 +3,7 @@ package net.supcm.enhancedenchanting.common.data.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
@@ -17,6 +18,7 @@ import net.supcm.enhancedenchanting.EnhancedEnchanting;
 import net.supcm.enhancedenchanting.common.init.RecipeRegister;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 
 public class ReassessmentRecipe implements IRecipe<IInventory> {
     public static ResourceLocation ID = new ResourceLocation(EnhancedEnchanting.MODID, "reassessment");
@@ -61,6 +63,8 @@ public class ReassessmentRecipe implements IRecipe<IInventory> {
                 conceptions[i] = el.getAsInt();
                 i++;
             }
+            if(Arrays.stream(conceptions).anyMatch(x -> x > 16) || Arrays.stream(conceptions).anyMatch(x -> x < 0))
+                throw new JsonParseException("Each Concept count must be in range [0;16]!");
             return new ReassessmentRecipe(rs, output, inputs, conceptions);
         }
         @Nullable @Override public ReassessmentRecipe fromNetwork(ResourceLocation rs, PacketBuffer buffer) {

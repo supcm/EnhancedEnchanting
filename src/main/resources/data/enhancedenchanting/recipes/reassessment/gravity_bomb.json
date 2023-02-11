@@ -1,0 +1,18 @@
+{
+  "type": "enhancedenchanting:reassessment",
+  "conceptions": [
+    0,
+    1,
+    0,
+    1,
+    2,
+    2
+  ],
+  "input": {
+    "item": "minecraft:tnt"
+  },
+  "output": {
+    "item": "enhancedenchanting:gravity_bomb",
+    "count": 4
+  }
+}

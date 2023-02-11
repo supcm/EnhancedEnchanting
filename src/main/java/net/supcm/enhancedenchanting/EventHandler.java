@@ -1,26 +1,33 @@
 package net.supcm.enhancedenchanting;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.gui.screen.EnchantmentScreen;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.TableLootEntry;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.LootTableLoadEvent;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -35,10 +42,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.supcm.enhancedenchanting.client.block.entity.renderer.*;
+import net.supcm.enhancedenchanting.client.gui.ExaltationTableScreen;
+import net.supcm.enhancedenchanting.common.exaltation.exaltations.FireExaltation;
 import net.supcm.enhancedenchanting.common.init.*;
 import net.supcm.enhancedenchanting.common.enchantments.EnchantmentsList;
 import net.supcm.enhancedenchanting.common.entity.GuardianEntity;
 import net.supcm.enhancedenchanting.client.entity.renderer.GuardianRenderer;
+import net.supcm.enhancedenchanting.common.item.IncubatorItem;
 import net.supcm.enhancedenchanting.common.network.PacketHandler;
 import net.supcm.enhancedenchanting.common.network.packets.T2ListPacket;
 import net.supcm.enhancedenchanting.common.network.packets.T3ListPacket;
@@ -46,6 +56,7 @@ import java.util.*;
 
 @Mod.EventBusSubscriber(modid = EnhancedEnchanting.MODID)
 public class EventHandler {
+
     @SubscribeEvent public static void onLootTableLoad(LootTableLoadEvent e) {
         if(e.getTable().getLootTableId().getPath().startsWith("chest") &&
                 !e.getTable().getLootTableId().getPath().contains("village"))
@@ -77,8 +88,7 @@ public class EventHandler {
                     new T3ListPacket(createThirdList(new Random(((ServerWorld)e.getPlayer().level).getSeed()))));
         }
     }
-
-    private static Map<String, Enchantment> createThirdMap(Random rand) {
+    /*private static Map<String, Enchantment> createThirdMap(Random rand) {
         List<String> words = new ArrayList<>();
         for (String symbol : EnchantmentsList.SYMBOLS_LIST)
             for (String symbol1 : EnchantmentsList.SYMBOLS_LIST)
@@ -91,7 +101,6 @@ public class EventHandler {
                 EnchantmentsList.T3_MAP.put(words.get(i), EnchantmentsList.T3_LIST.get(i));
         return EnchantmentsList.T3_MAP;
     }
-
     private static Map<String, Enchantment> createSecondMap(Random rand) {
         List<String> words = new ArrayList<>();
         for (String symbol : EnchantmentsList.SYMBOLS_LIST)
@@ -103,15 +112,13 @@ public class EventHandler {
                 EnchantmentsList.T2_MAP.put(words.get(i), EnchantmentsList.T2_LIST.get(i));
         return EnchantmentsList.T2_MAP;
     }
-
     private static Map<String, Enchantment> createFirstMap(Random rand) {
         Collections.shuffle(EnchantmentsList.SYMBOLS_LIST, rand);
         for(int i = 0; i < EnchantmentsList.T1_LIST.size(); i++)
             EnchantmentsList.T1_MAP.put(EnchantmentsList.SYMBOLS_LIST.get(i),
                     EnchantmentsList.T1_LIST.get(i));
         return EnchantmentsList.T1_MAP;
-    }
-
+    }*/
     public static void randomizeFirstList(Random rand) {
         Collections.shuffle(EnchantmentsList.SYMBOLS_LIST, rand);
         for(int i = 0; i < EnchantmentsList.T1_LIST.size(); i++)
@@ -142,7 +149,15 @@ public class EventHandler {
                 EnchantmentsList.T3_MAP.put(words.get(i), EnchantmentsList.T3_LIST.get(i));
         return new ArrayList<>(EnchantmentsList.T3_MAP.keySet());
     }
-
+    public static void progressIncubator(NonNullList<ItemStack> stacks, String source) {
+        stacks.stream().filter(s -> s.getTag() != null && s.getItem() instanceof IncubatorItem)
+                .forEach(stack -> {
+                    CompoundNBT tag = stack.getTag();
+                    if(tag.contains(source)){
+                        tag.putInt(source, tag.getInt(source) + 1);
+                    }
+        });
+    }
     @SubscribeEvent public static void xpDrop(BlockEvent.BreakEvent e) {
         if(e.getPlayer() != null && e.getPlayer().getMainHandItem().isEnchanted()) {
             Map<Enchantment, Integer> data =
@@ -150,6 +165,18 @@ public class EventHandler {
             if(data.containsKey(EnchantmentRegister.XP_BOOST.get()))
                 e.setExpToDrop(e.getExpToDrop() *
                         data.get(EnchantmentRegister.XP_BOOST.get()));
+        }
+        if(e.getPlayer() != null) {
+            progressIncubator(e.getPlayer().inventory.items, "Mine");
+        }
+    }
+    @SubscribeEvent public static void killMob(LivingDeathEvent e) {
+        if(e.getSource() instanceof EntityDamageSource) {
+            EntityDamageSource damageSource = (EntityDamageSource)e.getSource();
+            if(damageSource.getMsgId().equals("player") && damageSource.getEntity() != null) {
+                PlayerEntity player = (PlayerEntity)damageSource.getEntity();
+                progressIncubator(player.inventory.items, "Kill");
+            }
         }
     }
     @SubscribeEvent public static void xpDrop(LivingExperienceDropEvent e) {
@@ -191,7 +218,7 @@ public class EventHandler {
                 new ItemStack(ItemRegister.WOY.get()),
                 new ItemStack(ItemRegister.VER.get())
         };
-        for(int i = 0; i < 6; i++) {
+        for(int i = 0; i < stack.length; i++) {
             ItemEntity item = new ItemEntity(entity.level,
                     entity.blockPosition().getX(),
                     entity.blockPosition().getY(),
@@ -209,12 +236,12 @@ public class EventHandler {
                 if (data.containsKey(EnchantmentRegister.GRAVITY_CORE.get())) {
                     List<ItemEntity> entities = e.getWorld().getEntitiesOfClass(ItemEntity.class,
                             new AxisAlignedBB(
-                                    e.getPlayer().blockPosition().getX() - (4*data.get(EnchantmentRegister.GRAVITY_CORE.get())),
-                                    e.getPlayer().blockPosition().getY() - (2*data.get(EnchantmentRegister.GRAVITY_CORE.get())),
-                                    e.getPlayer().blockPosition().getZ() - (4*data.get(EnchantmentRegister.GRAVITY_CORE.get())),
-                                    e.getPlayer().blockPosition().getX() + (4*data.get(EnchantmentRegister.GRAVITY_CORE.get())),
-                                    e.getPlayer().blockPosition().getY() + (2*data.get(EnchantmentRegister.GRAVITY_CORE.get())),
-                                    e.getPlayer().blockPosition().getZ() + (4*data.get(EnchantmentRegister.GRAVITY_CORE.get()))));
+                                    e.getPlayer().blockPosition().getX() - (4 * data.get(EnchantmentRegister.GRAVITY_CORE.get())),
+                                    e.getPlayer().blockPosition().getY() - (2 * data.get(EnchantmentRegister.GRAVITY_CORE.get())),
+                                    e.getPlayer().blockPosition().getZ() - (4 * data.get(EnchantmentRegister.GRAVITY_CORE.get())),
+                                    e.getPlayer().blockPosition().getX() + (4 * data.get(EnchantmentRegister.GRAVITY_CORE.get())),
+                                    e.getPlayer().blockPosition().getY() + (2 * data.get(EnchantmentRegister.GRAVITY_CORE.get())),
+                                    e.getPlayer().blockPosition().getZ() + (4 * data.get(EnchantmentRegister.GRAVITY_CORE.get()))));
                     if(entities.size() > 0 && !e.getPlayer().isCreative()) {
                         if(e.getItemStack().isDamageableItem())
                             e.getItemStack().setDamageValue(e.getItemStack().getDamageValue() + 1);
@@ -239,6 +266,11 @@ public class EventHandler {
         }
         @SubscribeEvent public static void addEntityAttributes(EntityAttributeCreationEvent e) {
             e.put(EntityTypeRegister.GUARDIAN.get(), GuardianEntity.createGuardAttributes().build());
+        }
+        @SubscribeEvent public static void registerLootModifiers(RegistryEvent.Register<GlobalLootModifierSerializer<?>>
+                                                                         e) {
+            e.getRegistry().register(new FireExaltation.SmeltModifier.Serializer()
+                    .setRegistryName(EnhancedEnchanting.MODID, "smelting"));
         }
     }
     @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = EnhancedEnchanting.MODID,
@@ -292,6 +324,15 @@ public class EventHandler {
                             }
                             return 0.0f;
                         });
+                ItemModelsProperties.register(ItemRegister.EXALTATION_STONE.get(),
+                        new ResourceLocation(EnhancedEnchanting.MODID, "is_ability"),
+                        (stack, world, entity) -> {
+                            if(stack.getTag() != null && !stack.getTag().getBoolean("IsAbility"))
+                                return 1.0f;
+                            return 0.0f;
+                        });
+                ScreenManager.register(ContainerRegister.EXALTATION_TABLE_CONTAINER.get(),
+                        ExaltationTableScreen::new);
             });
             RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegister.GUARDIAN.get(),
                     GuardianRenderer::new);

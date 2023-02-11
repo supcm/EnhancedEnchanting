@@ -1,0 +1,17 @@
+{
+  "type": "enhancedenchanting:reassessment",
+  "conceptions": [
+    0,
+    2,
+    0,
+    2,
+    1,
+    0
+  ],
+  "input": {
+    "item": "minecraft:feather"
+  },
+  "output": {
+    "item": "enhancedenchanting:enchanted_feather"
+  }
+}

@@ -15,6 +15,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.supcm.enhancedenchanting.common.data.recipes.DisabledCondition;
+import net.supcm.enhancedenchanting.common.exaltation.Exaltations;
 import net.supcm.enhancedenchanting.common.init.*;
 import net.supcm.enhancedenchanting.common.network.PacketHandler;
 
@@ -43,8 +44,10 @@ public class EnhancedEnchanting {
         EnchantmentRegister.reg(bus);
         RecipeRegister.reg(bus);
         EntityTypeRegister.reg(bus);
+        ContainerRegister.reg(bus);
         ItemTags.createOptional(new ResourceLocation(MODID, "symbols"));
         ItemTags.createOptional(new ResourceLocation(MODID, "dyes"));
+        Exaltations.registerExaltations();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EnhancedEnchantingConfig.SPEC,
                 MODID + "-common.toml");
     }

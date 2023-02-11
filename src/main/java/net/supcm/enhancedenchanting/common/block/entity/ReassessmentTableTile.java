@@ -107,11 +107,13 @@ public class ReassessmentTableTile extends TileEntity implements ITickableTileEn
     }
     int i = 0;
     @Override public void tick() {
-        validate(worldPosition, i == 0);
-        i++;
-        if(!level.isClientSide && isValid)
-            if(recipe == null && !handler.getStackInSlot(0).isEmpty())
-                updateRecipe();
+        if(level != null){
+            validate(worldPosition, i == 0);
+            i++;
+            if (!level.isClientSide && isValid)
+                if (recipe == null && !handler.getStackInSlot(0).isEmpty())
+                    updateRecipe();
+        }
     }
     public void createResult() {
         if(recipe != null) {

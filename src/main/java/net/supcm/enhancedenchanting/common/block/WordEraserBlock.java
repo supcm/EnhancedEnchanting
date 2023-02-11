@@ -53,12 +53,6 @@ public class WordEraserBlock extends ContainerBlock {
             WordEraserTile te = (WordEraserTile)world.getBlockEntity(pos);
             world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(),
                     te.handler.getStackInSlot(0)));
-            world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(),
-                    te.handler.getStackInSlot(1)));
-            world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(),
-                    te.handler.getStackInSlot(2)));
-            world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(),
-                    te.handler.getStackInSlot(3)));
         }
         super.onRemove(state, world, pos, nextState, bool);
     }

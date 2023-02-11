@@ -38,6 +38,9 @@ public class TileRegister {
     public static final RegistryObject<TileEntityType<WordEraserTile>> WORD_ERASER_TILE_TYPE =
             TILES.register("word_eraser", () -> TileEntityType.Builder.of(WordEraserTile::new,
                     BlockRegister.WORD_ERASER.get()).build(null));
+    public static final RegistryObject<TileEntityType<ExaltationTableTile>> EXALTATION_TABLE_TILE_TYPE =
+            TILES.register("exaltation_table", () -> TileEntityType.Builder.of(ExaltationTableTile::new,
+                    BlockRegister.EXALTATION_TABLE.get()).build(null));
     public static void reg(IEventBus bus) {
         TILES.register(bus);
     }

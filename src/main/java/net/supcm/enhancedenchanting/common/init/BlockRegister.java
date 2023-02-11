@@ -35,6 +35,8 @@ public class BlockRegister {
             ThoughtLoomBlock::new);
     public static final RegistryObject<Block> WORD_ERASER = createBlock("word_eraser",
             WordEraserBlock::new);
+    public static final RegistryObject<Block> EXALTATION_TABLE = createBlock("exaltation_table",
+            ExaltationTableBlock::new);
     public static final RegistryObject<Block> REASSESSMENT_TABLE = BLOCKS.register("reassessment_table",
             ReassessmentTableBlock::new);
     public static final RegistryObject<Item> REASSESSMENT_TABLE_ITEM = ItemRegister.ITEMS.register("reassessment_table",
